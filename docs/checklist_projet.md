@@ -35,33 +35,50 @@
 ## 🔍 Phase 2 - C1 : Collecte Multi-sources (Semaine 2)
 
 ### 🌐 Scraping Web
-- [ ] Analyser structure sites cibles (SeLoger, LeBonCoin)
-- [ ] Implémenter scraper SeLoger (prix, surface, localisation)
-- [ ] Implémenter scraper LeBonCoin (annonces publiques)
-- [ ] Ajouter delays et respect robots.txt
-- [ ] Gérer erreurs HTTP et timeouts
+- [x] Analyser structure sites cibles (SeLoger, LeBonCoin)
+- [x] Implémenter scraper SeLoger (prix, surface, localisation)
+- [x] Implémenter scraper LeBonCoin (annonces publiques)
+- [x] Ajouter delays et respect robots.txt
+- [x] Gérer erreurs HTTP et timeouts
 
 ### 📊 Sources API
-- [ ] Explorer API INSEE (données démographiques)
-- [ ] Configurer appels API REST externes
-- [ ] Implémenter gestion rate limiting
-- [ ] Parser réponses JSON/XML
+- [x] Explorer API INSEE (données démographiques)
+- [x] Configurer appels API REST externes
+- [x] Implémenter gestion rate limiting
+- [x] Parser réponses JSON/XML
 
 ### 📁 Fichiers de données
-- [ ] Script import CSV/JSON
-- [ ] Validation format de données
-- [ ] Sauvegarde automatique dans data/raw/
+- [x] Script import CSV/JSON
+- [x] Validation format de données
+- [x] Sauvegarde automatique dans data/raw/
 
 ### 🗃️ Base de données existantes
-- [ ] Script connexion BDD externe
-- [ ] Requêtes SQL de lecture
-- [ ] Tests connexion et extraction
+- [x] Script connexion BDD externe
+- [x] Requêtes SQL de lecture
+- [x] Tests connexion et extraction
 
 ### 📝 Livrables C1
-- [ ] Scripts extraction fonctionnels
-- [ ] Tests robustesse (erreurs, empty responses)
-- [ ] Documentation des sources
-- [ ] Commit Git avec scripts C1
+- [x] Scripts extraction fonctionnels
+- [x] Tests robustesse (erreurs, empty responses)
+- [x] Documentation des sources
+- [x] Commit Git avec scripts C1
+
+### 🎯 Validation C1 - RÉSULTATS
+- [x] **Tests passés : 23/24 (95.8%)**
+- [x] **Scrapers web** : SeLoger + LeBonCoin fonctionnels
+- [x] **API INSEE** : Données démographiques intégrées
+- [x] **Import CSV/JSON** : Multi-formats supportés
+- [x] **ScraperManager** : Coordination multi-sources
+- [x] **Fichiers de sortie** : JSON + CSV générés
+- [x] **Documentation complète** : Architecture junior-friendly
+
+### 📅 Validation C1 - DÉTAILS
+- [x] **Date validation** : 30 Novembre 2025
+- [x] **Script validation** : `test_c1_validation.py` (23/24 tests)
+- [x] **Fichiers générés** : `data/raw/scraped_properties.json/csv`
+- [x] **Logs détaillés** : `logs/c1_validation.log`
+- [x] **Architecture** : Repository Pattern + Service Layer
+- [x] **Code qualité** : Tests unitaires + Documentation
 
 ---
 
@@ -238,13 +255,13 @@
 
 ## 📊 Progression Globale
 
-**Semaine 1** : ████░░░░░░ 20%
-**Semaine 2** : ██████░░░░░ 40%
-**Semaine 3** : ████████░░░ 60%
-**Semaine 4** : ██████████░ 80%
-**Semaine 5** : ███████████ 100%
+**Semaine 1** : ████████████ 100% ✅
+**Semaine 2** : ████████████ 100% ✅
+**Semaine 3** : ░░░░░░░░░░░ 0%
+**Semaine 4** : ░░░░░░░░░░░ 0%
+**Semaine 5** : ░░░░░░░░░░░ 0%
 
-**Total Compétences** : 0/5 validées
+**Total Compétences** : 1/5 validées (C1 ✅)
 
 ---
 

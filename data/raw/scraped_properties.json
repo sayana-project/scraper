@@ -1,0 +1,75 @@
+[
+  {
+    "title": "Appartement T3 Centre",
+    "price": 450000,
+    "surface": 80,
+    "postal_code": "75001",
+    "city": "Paris",
+    "source": "csv_import",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Studio Montmartre",
+    "price": 320000,
+    "surface": 35,
+    "postal_code": "75018",
+    "city": "Paris",
+    "source": "csv_import",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Appartement T3 Centre",
+    "price": 450000,
+    "surface": 80,
+    "postal_code": "75001",
+    "city": "Paris",
+    "source": "json_import",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Studio Montmartre",
+    "price": 320000,
+    "surface": 35,
+    "postal_code": "75018",
+    "city": "Paris",
+    "source": "json_import",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Données démographiques Paris",
+    "price": 0,
+    "surface": 0,
+    "postal_code": "75056",
+    "city": "Paris",
+    "population": 2200000,
+    "source": "insee_test",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Données démographiques Lyon",
+    "price": 0,
+    "surface": 0,
+    "postal_code": "69123",
+    "city": "Lyon",
+    "population": 513000,
+    "source": "insee_test",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  },
+  {
+    "title": "Données démographiques Marseille",
+    "price": 0,
+    "surface": 0,
+    "postal_code": "13201",
+    "city": "Marseille",
+    "population": 861000,
+    "source": "insee_test",
+    "scraped_at": "2025-11-30 13:35:58",
+    "scraping_session": "2025-11-30 13:35:58"
+  }
+]

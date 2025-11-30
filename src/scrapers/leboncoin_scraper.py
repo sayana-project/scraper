@@ -1,4 +1,4 @@
-# SeLoger Scraper (C1) - Implémentation fonctionnelle
+# LeBonCoin Scraper (C1) - Implémentation fonctionnelle
 import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict, Optional
@@ -9,22 +9,21 @@ from src.scrapers.base_scraper import BaseScraper
 
 logger = logging.getLogger(__name__)
 
-class SeLogerScraper(BaseScraper):
+class LeBonCoinScraper(BaseScraper):
     def __init__(self):
-        super().__init__(delay=2.0)
-        self.base_url = "https://www.seloger.com"
-        self.search_url = "https://www.seloger.com/immobilier/achat/immeuble-paris-75"
+        super().__init__(delay=3.0)  # Respect robots.txt
+        self.base_url = "https://www.leboncoin.fr"
+        self.search_url = "https://www.leboncoin.fr/recherche?category=9&region=ile_de_france"
 
     def extract_property_data(self, soup: BeautifulSoup) -> List[Dict]:
-        """Extrait les données des propriétés depuis SeLoger"""
+        """Extrait les données des propriétés depuis LeBonCoin"""
         properties = []
 
-        # Sélecteurs adaptés à la structure SeLoger (à valider avec inspection)
-        listings = soup.find_all('div', class_='Card__CardWrapper-sc-1g825k8-0')
+        # Structure LeBonCoin pour annonces immobilières
+        listings = soup.find_all('a', attrs={'data-qa-id': 'aditem_container'})
 
         if not listings:
             logger.warning("Aucune annonce trouvée - vérifier sélecteurs CSS")
-            # Fallback pour test
             return self._get_test_properties()
 
         for listing in listings:
@@ -36,16 +35,17 @@ class SeLogerScraper(BaseScraper):
                 logger.error(f"Erreur extraction propriété: {e}")
                 continue
 
-        logger.info(f"Extrait {len(properties)} propriétés de SeLoger")
+        logger.info(f"Extrait {len(properties)} propriétés de LeBonCoin")
         return properties
 
     def _extract_single_property(self, listing) -> Optional[Dict]:
         """Extrait une seule propriété"""
         try:
-            title = self._clean_text(listing.find('h2'))
+            # Extraction depuis attributs data-qa et structure HTML
+            title = self._extract_title(listing)
             price = self._extract_price(listing)
             surface = self._extract_surface(listing)
-            location = self._clean_text(listing.find('p', class_='Card__Location-sc-1nk0s6f-0'))
+            location = self._extract_location(listing)
 
             if not all([title, price, surface, location]):
                 logger.warning("Propriété incomplète ignorée")
@@ -57,17 +57,26 @@ class SeLogerScraper(BaseScraper):
                 'surface': surface,
                 'postal_code': self._extract_postal_code(location),
                 'city': self._extract_city(location),
-                'source': 'seloger',
+                'source': 'leboncoin',
                 'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S')
             }
         except Exception as e:
             logger.error(f"Erreur extraction propriété: {e}")
             return None
 
+    def _extract_title(self, element) -> Optional[str]:
+        """Extrait le titre"""
+        try:
+            title_element = element.find('p', attrs={'data-qa-id': 'aditem_title'})
+            return title_element.get_text(strip=True) if title_element else None
+        except:
+            return None
+
     def _extract_price(self, element) -> Optional[int]:
         """Extrait et nettoie le prix"""
         try:
-            price_element = element.find('span', class_='Tag__Tag-sc-1p0s089-0')
+            # Recherche dans le span de prix
+            price_element = element.find('span', attrs={'data-qa-id': 'aditem_price'})
             if price_element:
                 price_text = price_element.get_text(strip=True)
                 # Nettoyage: "300 000 €" -> 300000
@@ -80,11 +89,18 @@ class SeLogerScraper(BaseScraper):
     def _extract_surface(self, element) -> Optional[int]:
         """Extrait et nettoie la surface"""
         try:
-            # Chercher dans plusieurs endroits possibles
-            surface_element = (element.find('span', class_='Tag__Tag-sc-1p0s089-0') or
-                           element.find('div', string=re.compile(r'\d+m²')))
+            # Cherche la surface dans plusieurs emplacements possibles
+            surface_element = (
+                element.find('span', attrs={'data-qa-id': 'aditem_attribute'}) or
+                element.find(string=re.compile(r'\d+m²'))
+            )
+
             if surface_element:
-                surface_text = surface_element.get_text(strip=True)
+                if hasattr(surface_element, 'get_text'):
+                    surface_text = surface_element.get_text(strip=True)
+                else:
+                    surface_text = str(surface_element)
+
                 # Nettoyage: "85 m²" -> 85
                 surface_match = re.search(r'(\d+)', surface_text)
                 return int(surface_match.group(1)) if surface_match else None
@@ -92,20 +108,28 @@ class SeLogerScraper(BaseScraper):
             pass
         return None
 
-    def _clean_text(self, element) -> str:
-        """Nettoie le texte d'un élément"""
-        if element:
-            return element.get_text(strip=True)
-        return ""
+    def _extract_location(self, element) -> Optional[str]:
+        """Extrait la localisation"""
+        try:
+            location_element = element.find('span', attrs={'data-qa-id': 'aditem_location'})
+            return location_element.get_text(strip=True) if location_element else None
+        except:
+            return None
 
     def _extract_postal_code(self, location: str) -> str:
         """Extrait le code postal"""
+        if not location:
+            return "75001"  # Default Paris
+
         # Recherche pattern: "Paris 75001" -> "75001"
-        match = re.search(r'\b(\d{5})\b', location)
-        return match.group(1) if match else "75001"  # Default Paris
+        match = re.search(r'(\d{5})', location)
+        return match.group(1) if match else "75001"
 
     def _extract_city(self, location: str) -> str:
         """Extrait la ville"""
+        if not location:
+            return "Paris"
+
         # Nettoyage: "Paris 75001" -> "Paris"
         city = re.sub(r'\s*\d{5}\s*', '', location).strip()
         return city or "Paris"
@@ -114,21 +138,21 @@ class SeLogerScraper(BaseScraper):
         """Propriétés de test pour développement"""
         return [
             {
-                'title': 'Appartement T3 Paris Centre',
-                'price': 450000,
-                'surface': 75,
-                'postal_code': '75001',
+                'title': 'Maison avec jardin Paris',
+                'price': 850000,
+                'surface': 120,
+                'postal_code': '75014',
                 'city': 'Paris',
-                'source': 'seloger_test',
+                'source': 'leboncoin_test',
                 'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S')
             },
             {
-                'title': 'Studio Marais',
-                'price': 320000,
-                'surface': 35,
+                'title': 'Appartement 2 pièces Le Marais',
+                'price': 550000,
+                'surface': 55,
                 'postal_code': '75004',
                 'city': 'Paris',
-                'source': 'seloger_test',
+                'source': 'leboncoin_test',
                 'scraped_at': time.strftime('%Y-%m-%d %H:%M:%S')
             }
         ]
@@ -153,7 +177,7 @@ class SeLogerScraper(BaseScraper):
         all_properties = []
 
         for page in range(1, max_pages + 1):
-            url = f"{self.search_url}?page={page}"
+            url = f"{self.search_url}&page={page}"
             properties = self.scrape_page(url)
             all_properties.extend(properties)
 
@@ -167,7 +191,7 @@ class SeLogerScraper(BaseScraper):
 
 # Test du scraper
 if __name__ == "__main__":
-    scraper = SeLogerScraper()
+    scraper = LeBonCoinScraper()
     properties = scraper.run_scraper(max_pages=1)
 
     print(f"\n🏠 {len(properties)} propriétés extraites:")

@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Appartement T3 Centre",
+    "price": 450000,
+    "surface": 80,
+    "postal_code": "75001",
+    "city": "Paris"
+  },
+  {
+    "title": "Studio Montmartre",
+    "price": 320000,
+    "surface": 35,
+    "postal_code": "75018",
+    "city": "Paris"
+  }
+]
