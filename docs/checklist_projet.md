@@ -11,23 +11,24 @@
 ## ✅ Phase 1 - Structure et Configuration (Semaine 1)
 
 ### 📁 Structure du projet
-- [ ] Créer arborescence des dossiers (src/, data/, docs/, tests/)
-- [ ] Initialiser repository Git
-- [ ] Configurer environnement virtuel Python
-- [ ] Créer requirements.txt
-- [ ] Configurer .gitignore (Python, secrets, données)
+- [x] Créer arborescence des dossiers (src/, data/, docs/, tests/)
+- [x] Initialiser repository Git
+- [x] Configurer environnement virtuel Python
+- [x] Créer requirements.txt
+- [x] Configurer .gitignore (Python, secrets, données)
 
 ### 🛠️ Dépendances principales
-- [ ] Installer BeautifulSoup4 (scraping)
-- [ ] Installer SQLAlchemy (ORM base de données)
-- [ ] Installer FastAPI (API REST)
-- [ ] Installer pandas/numpy (traitement données)
-- [ ] Installer pytest (tests)
+- [x] Installer BeautifulSoup4 (scraping)
+- [x] Installer SQLAlchemy (ORM base de données)
+- [x] Installer FastAPI (API REST)
+- [x] Installer pandas/numpy (traitement données)
+- [x] Installer pytest (tests)
+- [x] Installer httpx (pour tests FastAPI)
 
 ### ⚙️ Configuration initiale
-- [ ] Fichier config.py (URLs sources, BDD, API keys)
-- [ ] Logging configuré (logs/ directory)
-- [ ] Structure de base des scripts
+- [x] Fichier config.py (URLs sources, BDD, API keys)
+- [x] Logging configuré (logs/ directory)
+- [x] Structure de base des scripts
 
 ---
 
