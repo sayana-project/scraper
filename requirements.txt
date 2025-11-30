@@ -1,0 +1,29 @@
+# Core dependencies
+requests
+scrapy
+fastapi
+uvicorn
+sqlalchemy
+pytest
+
+# Web scraping
+beautifulsoup4
+selenium
+
+# Data processing
+pandas
+numpy
+
+# Database
+psycopg2-binary
+
+# Authentication & security
+python-jose
+passlib
+python-multipart
+
+# Environment
+python-dotenv
+
+# Testing
+pytest-asyncio
