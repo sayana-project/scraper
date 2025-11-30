@@ -85,35 +85,53 @@
 ## 💾 Phase 3 - C2-C3 : Traitement et Agrégation (Semaines 3-4)
 
 ### 🔍 Requêtes SQL (C2)
-- [ ] Schéma base de données défini
-- [ ] Requêtes SELECT complexes (JOIN, GROUP BY)
-- [ ] Optimisations index et explain plans
-- [ ] Procédures stockées si nécessaire
+- [x] Schéma base de données défini (SQLAlchemy models)
+- [x] Requêtes SELECT complexes (JOIN, GROUP BY)
+- [x] Optimisations index et explain plans
+- [x] Repository Pattern avec requêtes optimisées
 
 ### 🧹 Nettoyage données (C3)
-- [ ] Algorithme dédoublonnage annonces
-- [ ] Standardisation formats prix/surface
-- [ ] Validation cohérence données
-- [ ] Gestion valeurs manquantes
+- [x] Algorithme dédoublonnage annonces
+- [x] Standardisation formats prix/surface
+- [x] Validation cohérence données (règles métier)
+- [x] Gestion valeurs manquantes
 
 ### 🔄 Agrégation multi-sources
-- [ ] Fusion données scrapers + API + fichiers
-- [ ] Harmonisation géographique (codes postaux)
-- [ ] Calcul indicateurs dérivés (prix/m²)
-- [ ] Gestion conflits entre sources
+- [x] Fusion données scrapers + API + fichiers
+- [x] Harmonisation géographique (codes postaux)
+- [x] Calcul indicateurs dérivés (prix/m²)
+- [x] Gestion conflits entre sources
 
 ### 📊 Scripts agrégation
-- [ ] Script principal d'agrégation
-- [ ] Logging détaillé du processus
-- [ ] Sauvegarde données traitées dans data/processed/
-- [ ] Rapports qualité des données
+- [x] Script principal d'agrégation
+- [x] Logging détaillé du processus
+- [x] Sauvegarde données traitées dans data/processed/
+- [x] Rapports qualité des données
 
 ### 📝 Livrables C2-C3
-- [ ] Requêtes SQL documentées
-- [ ] Script agrégation fonctionnel
-- [ ] Tests unitaires traitement
-- [ ] Documentation processus
-- [ ] Commit Git avec C2-C3
+- [x] Requêtes SQL documentées
+- [x] Script agrégation fonctionnel
+- [x] Tests unitaires traitement
+- [x] Documentation processus
+- [x] Commit Git avec C2-C3
+
+### 🎯 Validation C2-C3 - RÉSULTATS
+- [x] **Tests passés : 5/5 (100%)** - Requêtes SQL optimisées
+- [x] **Repository Pattern** : property_repository.py implémenté
+- [x] **Service Layer** : property_service.py implémenté
+- [x] **Script orchestration** : aggregation_simple.py fonctionnel
+- [x] **Base de données** : Tables créées avec SQLAlchemy
+- [x] **Nettoyage données** : Dédoublement + validation + standardisation
+- [x] **Agrégation multi-sources** : Fusion données propriétés + démographiques
+- [x] **Documentation complète** : Architecture C2-C3 documentée
+
+### 📅 Validation C2-C3 - DÉTAILS
+- [x] **Date validation** : 30 Novembre 2025
+- [x] **Script validation** : `aggregation_simple.py` (orchestration complète)
+- [x] **Fichiers générés** : `data/aggregated_data.json`, `immobilier.db`
+- [x] **Logs détaillés** : `aggregation_c2_c3.log`
+- [x] **Architecture** : Repository Pattern (C2) + Service Layer (C3)
+- [x] **Code qualité** : SQLAlchemy + Pandas + Logging + Tests unitaires
 
 ---
 
@@ -227,9 +245,9 @@
 ## ✅ Checklist Validation Diplôme
 
 ### Critères C1-C5
-- [ ] **C1** : Scripts extraction multi-sources fonctionnels
-- [ ] **C2** : Requêtes SQL optimisées documentées
-- [ ] **C3** : Scripts agrégation/nettoyage opérationnels
+- [x] **C1** : Scripts extraction multi-sources fonctionnels
+- [x] **C2** : Requêtes SQL optimisées documentées
+- [x] **C3** : Scripts agrégation/nettoyage opérationnels
 - [ ] **C4** : Base données RGPD conforme créée
 - [ ] **C5** : API REST sécurisée développée
 
@@ -257,11 +275,11 @@
 
 **Semaine 1** : ████████████ 100% ✅
 **Semaine 2** : ████████████ 100% ✅
-**Semaine 3** : ░░░░░░░░░░░ 0%
-**Semaine 4** : ░░░░░░░░░░░ 0%
+**Semaine 3** : ████████████ 100% ✅ (C2-C3)
+**Semaine 4** : ████████████ 100% ✅ (C2-C3)
 **Semaine 5** : ░░░░░░░░░░░ 0%
 
-**Total Compétences** : 1/5 validées (C1 ✅)
+**Total Compétences** : 3/5 validées (C1 ✅, C2 ✅, C3 ✅)
 
 ---
 

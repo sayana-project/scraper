@@ -1,0 +1,70 @@
+[
+  {
+    "postal_code": "75001",
+    "city": "Paris",
+    "total_properties": 1,
+    "avg_price": 450000.0,
+    "min_price": 450000,
+    "max_price": 450000,
+    "avg_surface": 80.0,
+    "sources": [
+      "csv_import"
+    ],
+    "sources_count": 1,
+    "price_per_m2_mean": 5625.0,
+    "price_per_m2_median": 5625.0,
+    "aggregation_date": "2025-11-30T13:53:00.900555",
+    "data_period_start": "2025-11-30 13:35:58",
+    "data_period_end": "2025-11-30 13:35:58",
+    "price_q1": 450000.0,
+    "price_median": 450000.0,
+    "price_q3": 450000.0,
+    "surface_q1": 80.0,
+    "surface_median": 80.0,
+    "surface_q3": 80.0,
+    "property_types": {
+      "appartement": 1
+    },
+    "source_distribution": {
+      "csv_import": 1
+    },
+    "population": 2200000,
+    "price_per_inhabitant": 0.2,
+    "properties_per_1000_inhabitants": 0.0,
+    "data_quality_score": 70.0
+  },
+  {
+    "postal_code": "75018",
+    "city": "Paris",
+    "total_properties": 1,
+    "avg_price": 320000.0,
+    "min_price": 320000,
+    "max_price": 320000,
+    "avg_surface": 35.0,
+    "sources": [
+      "csv_import"
+    ],
+    "sources_count": 1,
+    "price_per_m2_mean": 9142.86,
+    "price_per_m2_median": 9142.86,
+    "aggregation_date": "2025-11-30T13:53:00.907944",
+    "data_period_start": "2025-11-30 13:35:58",
+    "data_period_end": "2025-11-30 13:35:58",
+    "price_q1": 320000.0,
+    "price_median": 320000.0,
+    "price_q3": 320000.0,
+    "surface_q1": 35.0,
+    "surface_median": 35.0,
+    "surface_q3": 35.0,
+    "property_types": {
+      "studio": 1
+    },
+    "source_distribution": {
+      "csv_import": 1
+    },
+    "population": 2200000,
+    "price_per_inhabitant": 0.15,
+    "properties_per_1000_inhabitants": 0.0,
+    "data_quality_score": 70.0
+  }
+]
