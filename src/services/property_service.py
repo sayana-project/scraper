@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class PropertyService:
     """Service Layer pour le nettoyage et l'agrégation des données (C3)"""
 
-    def __init__(self, database_url: str = "sqlite:///data/immobilier.db"):
+    def __init__(self, database_url: str = "sqlite:///data/immobilier_rgpd.db"):
         self.property_repo = PropertyRepository(database_url)
 
     # ===== MÉTHODES DE NETTOYAGE (C3) =====
@@ -257,6 +257,103 @@ class PropertyService:
                 type_counts['autre'] += 1
 
         return {k: v for k, v in type_counts.items() if v > 0}
+
+    def get_properties(self, skip: int = 0, limit: int = 100, city: Optional[str] = None, min_price: Optional[int] = None, max_price: Optional[int] = None) -> List[Dict[str, Any]]:
+        """Lister les propriétés avec filtres optionnels"""
+        try:
+            return self.property_repo.get_properties(skip, limit, city, min_price, max_price)
+        except Exception as e:
+            logger.error(f"Erreur récupération propriétés: {e}")
+            raise ValueError(f"Impossible de récupérer les propriétés: {str(e)}")
+
+    def get_property_by_id(self, property_id: int) -> Optional[Dict[str, Any]]:
+        """Récupérer une propriété par son ID"""
+        try:
+            return self.property_repo.get_property_by_id(property_id)
+        except Exception as e:
+            logger.error(f"Erreur récupération propriété {property_id}: {e}")
+            return None
+
+    def update_property(self, property_id: int, property_update: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Mettre à jour une propriété"""
+        try:
+            # Validation des données de mise à jour
+            if not self._validate_required_fields(property_update):
+                raise ValueError("Champs obligatoires manquants")
+
+            property_update = self._standardize_property_data(property_update)
+
+            if not self._validate_business_rules(property_update):
+                raise ValueError("Règles métier non respectées")
+
+            updated_property = self.property_repo.update_property(property_id, property_update)
+            if updated_property:
+                logger.info(f"Propriété {property_id} mise à jour avec succès")
+            return updated_property
+
+        except Exception as e:
+            logger.error(f"Erreur mise à jour propriété {property_id}: {e}")
+            raise ValueError(f"Impossible de mettre à jour la propriété: {str(e)}")
+
+        return None
+
+    def delete_property(self, property_id: int) -> bool:
+        """Supprimer une propriété"""
+        try:
+            deleted = self.property_repo.delete_property(property_id)
+            if deleted:
+                logger.info(f"Propriété {property_id} supprimée avec succès")
+            return deleted
+        except Exception as e:
+            logger.error(f"Erreur suppression propriété {property_id}: {e}")
+            return False
+
+    def get_city_analytics(self, city: str) -> Optional[Dict[str, Any]]:
+        """Obtenir les statistiques par ville"""
+        try:
+            analytics_data = self.property_repo.get_city_analytics(city)
+            if not analytics_data:
+                return None
+
+            return {
+                'city': city,
+                'average_price_per_m2': round(analytics_data.get('price_per_m2_mean', 0), 2),
+                'total_properties': analytics_data.get('total_properties', 0),
+                'min_price': analytics_data.get('min_price', 0),
+                'max_price': analytics_data.get('max_price', 0)
+            }
+        except Exception as e:
+            logger.error(f"Erreur analytics ville {city}: {e}")
+            return None
+
+    def get_available_cities(self) -> List[str]:
+        """Lister les villes disponibles"""
+        try:
+            return self.property_repo.get_available_cities()
+        except Exception as e:
+            logger.error(f"Erreur récupération villes: {e}")
+            return []
+
+    def get_overview_analytics(self) -> Dict[str, Any]:
+        """Statistiques générales sur toutes les propriétés"""
+        try:
+            overview = self.property_repo.get_overview_analytics()
+            return {
+                'city': 'Toutes villes',
+                'average_price_per_m2': round(overview.get('price_per_m2_mean', 0), 2),
+                'total_properties': overview.get('total_properties', 0),
+                'min_price': overview.get('min_price', 0),
+                'max_price': overview.get('max_price', 0)
+            }
+        except Exception as e:
+            logger.error(f"Erreur analytics overview: {e}")
+            return {
+                'city': 'Toutes villes',
+                'average_price_per_m2': 0,
+                'total_properties': 0,
+                'min_price': 0,
+                'max_price': 0
+            }
 
     def close(self):
         """Ferme la connexion à la base de données"""

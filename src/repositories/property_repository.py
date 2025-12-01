@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class PropertyRepository:
     """Repository Pattern pour les requêtes SQL optimisées (C2)"""
 
-    def __init__(self, database_url: str = "sqlite:///data/immobilier.db"):
+    def __init__(self, database_url: str = "sqlite:///data/immobilier_rgpd.db"):
         self.engine = create_engine(database_url)
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 
@@ -32,7 +32,7 @@ class PropertyRepository:
     def get_by_id(self, property_id: int) -> Optional[Property]:
         """Récupère une propriété par ID (requête simple)"""
         with self.get_session() as session:
-            return session.query(Property).filter(Property.id == property_id).first()
+            return session.query(Property).filter(Property.id_prop == property_id).first()
 
     def get_all(self, limit: int = 100) -> List[Property]:
         """Récupère toutes les propriétés (requête simple)"""
@@ -45,8 +45,8 @@ class PropertyRepository:
         """Requête optimisée pour les propriétés par ville"""
         with self.get_session() as session:
             return session.query(Property)\
-                .filter(Property.city.ilike(f'%{city}%'))\
-                .order_by(desc(Property.price))\
+                .filter(Property.ville.ilike(f'%{city}%'))\
+                .order_by(desc(Property.prix_euros))\
                 .limit(limit)\
                 .all()
 
@@ -54,8 +54,8 @@ class PropertyRepository:
         """Requête optimisée pour les propriétés par code postal"""
         with self.get_session() as session:
             return session.query(Property)\
-                .filter(Property.postal_code == postal_code)\
-                .order_by(desc(Property.price))\
+                .filter(Property.code_postal == postal_code)\
+                .order_by(desc(Property.prix_euros))\
                 .limit(limit)\
                 .all()
 
@@ -63,8 +63,8 @@ class PropertyRepository:
         """Requête optimisée pour les propriétés par plage de prix"""
         with self.get_session() as session:
             return session.query(Property)\
-                .filter(and_(Property.price >= min_price, Property.price <= max_price))\
-                .order_by(asc(Property.price))\
+                .filter(and_(Property.prix_euros >= min_price, Property.prix_euros <= max_price))\
+                .order_by(asc(Property.prix_euros))\
                 .limit(limit)\
                 .all()
 
@@ -72,8 +72,8 @@ class PropertyRepository:
         """Requête optimisée pour les propriétés par plage de surface"""
         with self.get_session() as session:
             return session.query(Property)\
-                .filter(and_(Property.surface >= min_surface, Property.surface <= max_surface))\
-                .order_by(desc(Property.surface))\
+                .filter(and_(Property.surface_m2_m2 >= min_surface, Property.surface_m2_m2 <= max_surface))\
+                .order_by(desc(Property.surface_m2_m2))\
                 .limit(limit)\
                 .all()
 
@@ -85,11 +85,11 @@ class PropertyRepository:
         with self.get_session() as session:
             return session.query(Property)\
                 .filter(and_(
-                    Property.city.ilike(f'%{city}%'),
-                    Property.price >= min_price,
-                    Property.price <= max_price
+                    Property.ville.ilike(f'%{city}%'),
+                    Property.prix_euros >= min_price,
+                    Property.prix_euros <= max_price
                 ))\
-                .order_by(desc(Property.price))\
+                .order_by(desc(Property.prix_euros))\
                 .limit(limit)\
                 .all()
 
@@ -99,19 +99,19 @@ class PropertyRepository:
             query = session.query(
                 Property,
                 DemographicData.population,
-                (Property.price / Property.surface).label('price_per_m2')
+                (Property.prix_euros / Property.surface_m2_m2).label('price_per_m2')
             ).outerjoin(
                 DemographicData,
                 and_(
-                    Property.postal_code == DemographicData.postal_code,
-                    Property.city == DemographicData.city
+                    Property.code_postal == DemographicData.postal_code,
+                    Property.ville == DemographicData.city
                 )
             )
 
             if city:
-                query = query.filter(Property.city.ilike(f'%{city}%'))
+                query = query.filter(Property.ville.ilike(f'%{city}%'))
 
-            results = query.order_by(desc(Property.price)).limit(100).all()
+            results = query.order_by(desc(Property.prix_euros)).limit(100).all()
 
             return [
                 {
@@ -128,19 +128,19 @@ class PropertyRepository:
         """Requête avec agrégation GROUP BY par ville (C2)"""
         with self.get_session() as session:
             query = session.query(
-                Property.city,
-                Property.postal_code,
-                func.count(Property.id).label('total_properties'),
-                func.avg(Property.price).label('avg_price'),
-                func.min(Property.price).label('min_price'),
-                func.max(Property.price).label('max_price'),
-                func.avg(Property.surface).label('avg_surface')
+                Property.ville,
+                Property.code_postal,
+                func.count(Property.id_prop).label('total_properties'),
+                func.avg(Property.prix_euros).label('avg_price'),
+                func.min(Property.prix_euros).label('min_price'),
+                func.max(Property.prix_euros).label('max_price'),
+                func.avg(Property.surface_m2_m2).label('avg_surface')
             )
 
             if city:
-                query = query.filter(Property.city.ilike(f'%{city}%'))
+                query = query.filter(Property.ville.ilike(f'%{city}%'))
 
-            results = query.group_by(Property.city, Property.postal_code).all()
+            results = query.group_by(Property.ville, Property.code_postal).all()
 
             return [
                 {
@@ -159,15 +159,15 @@ class PropertyRepository:
         """Requête complexe pour distribution prix/m² par ville"""
         with self.get_session() as session:
             query = session.query(
-                Property.city,
-                func.avg(Property.price / Property.surface).label('avg_price_per_m2'),
-                func.count(Property.id).label('property_count')
+                Property.ville,
+                func.avg(Property.prix_euros / Property.surface_m2).label('avg_price_per_m2'),
+                func.count(Property.id_prop).label('property_count')
             )
 
             if city:
-                query = query.filter(Property.city.ilike(f'%{city}%'))
+                query = query.filter(Property.ville.ilike(f'%{city}%'))
 
-            results = query.group_by(Property.city).order_by(desc('avg_price_per_m2')).all()
+            results = query.group_by(Property.ville).order_by(desc('avg_price_per_m2')).all()
 
             return [
                 {
@@ -183,16 +183,16 @@ class PropertyRepository:
     def get_properties_above_avg_price(self, city: str = None) -> List[Property]:
         """Requête avec sous-requête pour propriétés au-dessus moyenne"""
         with self.get_session() as session:
-            avg_price_subquery = session.query(func.avg(Property.price))
+            avg_price_subquery = session.query(func.avg(Property.prix_euros))
             if city:
-                avg_price_subquery = avg_price_subquery.filter(Property.city.ilike(f'%{city}%'))
+                avg_price_subquery = avg_price_subquery.filter(Property.ville.ilike(f'%{city}%'))
 
             return session.query(Property)\
                 .filter(and_(
-                    Property.price > avg_price_subquery,
-                    Property.city.ilike(f'%{city}%') if city else True
+                    Property.prix_euros > avg_price_subquery,
+                    Property.ville.ilike(f'%{city}%') if city else True
                 ))\
-                .order_by(desc(Property.price))\
+                .order_by(desc(Property.prix_euros))\
                 .all()
 
     # ===== MÉTHODES DE MANIPULATION (C2) =====
@@ -248,26 +248,26 @@ class PropertyRepository:
         with self.get_session() as session:
             # Statistiques générales
             general_stats = session.query(
-                func.count(Property.id).label('total_properties'),
-                func.avg(Property.price).label('avg_price'),
-                func.avg(Property.surface).label('avg_surface')
+                func.count(Property.id_prop).label('total_properties'),
+                func.avg(Property.prix_euros).label('avg_price'),
+                func.avg(Property.surface_m2_m2).label('avg_surface')
             ).first()
 
             # Top 10 des villes les plus chères
             expensive_cities = session.query(
-                Property.city,
-                func.avg(Property.price).label('avg_price'),
-                func.count(Property.id).label('property_count')
-            ).group_by(Property.city)\
+                Property.ville,
+                func.avg(Property.prix_euros).label('avg_price'),
+                func.count(Property.id_prop).label('property_count')
+            ).group_by(Property.ville)\
              .order_by(desc('avg_price'))\
              .limit(10)\
              .all()
 
             # Distribution par source
             source_stats = session.query(
-                Property.source,
-                func.count(Property.id).label('count')
-            ).group_by(Property.source)\
+                Property.source_collecte,
+                func.count(Property.id_prop).label('count')
+            ).group_by(Property.source_collecte)\
              .order_by(desc('count'))\
              .all()
 
@@ -286,6 +286,144 @@ class PropertyRepository:
                     for source, count in source_stats
                 ]
             }
+
+    def get_city_analytics(self, city: str) -> Optional[Dict[str, Any]]:
+        """Obtenir les statistiques analytiques pour une ville spécifique"""
+        with self.get_session() as session:
+            # Vérifier si la ville existe dans la base
+            city_properties = session.query(Property).filter(Property.ville.ilike(f'%{city}%')).all()
+
+            if not city_properties:
+                return None
+
+            # Calculer les statistiques
+            total_properties = len(city_properties)
+            prices = [p.prix_euros for p in city_properties]
+            surfaces = [p.surface_m2 for p in city_properties]
+            prices_per_m2 = [p.prix_euros / p.surface_m2 for p in city_properties]
+
+            return {
+                'city': city,
+                'total_properties': total_properties,
+                'min_price': min(prices),
+                'max_price': max(prices),
+                'average_price_per_m2': round(sum(prices_per_m2) / len(prices_per_m2), 2),
+                'price_q1': round(sorted(prices)[len(prices)//4], 2),
+                'price_median': round(sorted(prices)[len(prices)//2], 2),
+                'price_q3': round(sorted(prices)[3*len(prices)//4], 2),
+                'surface_q1': round(sorted(surfaces)[len(surfaces)//4], 2),
+                'surface_median': round(sorted(surfaces)[len(surfaces)//2], 2),
+                'surface_q3': round(sorted(surfaces)[3*len(surfaces)//4], 2)
+            }
+
+    def get_properties(self, skip: int = 0, limit: int = 100,
+                       city: Optional[str] = None,
+                       min_price: Optional[int] = None,
+                       max_price: Optional[int] = None) -> List[Dict[str, Any]]:
+        """Lister les propriétés avec filtres optionnels"""
+        with self.get_session() as session:
+            query = session.query(Property)
+
+            # Appliquer les filtres
+            if city:
+                query = query.filter(Property.ville.ilike(f'%{city}%'))
+
+            if min_price is not None:
+                query = query.filter(Property.prix_euros >= min_price)
+
+            if max_price is not None:
+                query = query.filter(Property.prix_euros <= max_price)
+
+            # Appliquer pagination et ordre
+            properties = query.offset(skip).limit(limit).all()
+
+            # Convertir en dictionnaires en utilisant la méthode to_dict() du modèle
+            return [prop.to_dict() for prop in properties]
+
+    def get_available_cities(self) -> List[str]:
+        """Lister toutes les villes disponibles dans la base de données"""
+        with self.get_session() as session:
+            cities = session.query(Property.ville).distinct().all()
+            return [city[0] for city in cities if city[0]]
+
+    def get_overview_analytics(self) -> Dict[str, Any]:
+        """Statistiques générales sur toutes les propriétés"""
+        with self.get_session() as session:
+            # Statistiques générales
+            total_properties = session.query(func.count(Property.id_prop)).scalar() or 0
+
+            if total_properties == 0:
+                return {
+                    'city': 'Toutes villes',
+                    'total_properties': 0,
+                    'min_price': 0,
+                    'max_price': 0,
+                    'average_price_per_m2': 0
+                }
+
+            # Prix et surfaces
+            price_stats = session.query(
+                func.min(Property.prix_euros).label('min_price'),
+                func.max(Property.prix_euros).label('max_price'),
+                func.avg(Property.prix_euros).label('avg_price')
+            ).first()
+
+            # Prix au m² moyen
+            price_per_m2_avg = session.query(
+                func.avg(Property.prix_euros / Property.surface_m2)
+            ).scalar() or 0
+
+            return {
+                'city': 'Toutes villes',
+                'total_properties': total_properties,
+                'min_price': int(price_stats.min_price or 0),
+                'max_price': int(price_stats.max_price or 0),
+                'average_price_per_m2': round(float(price_per_m2_avg), 2)
+            }
+
+    # ===== MÉTHODES MANQUANTES POUR L'API (C5) =====
+
+    def get_property_by_id(self, property_id: int) -> Optional[Dict[str, Any]]:
+        """Récupère une propriété par ID et retourne un dictionnaire"""
+        with self.get_session() as session:
+            property = session.query(Property).filter(Property.id_prop == property_id).first()
+            if property:
+                return property.to_dict()
+            return None
+
+    def update_property(self, property_id: int, property_update: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Met à jour une propriété par ID"""
+        with self.get_session() as session:
+            property = session.query(Property).filter(Property.id_prop == property_id).first()
+            if property:
+                if property_update.get('title'):
+                    property.quartier_anonymise = property_update['title']
+                if property_update.get('price'):
+                    property.prix_euros = property_update['price']
+                if property_update.get('surface'):
+                    property.surface_m2 = property_update['surface']
+                if property_update.get('postal_code'):
+                    property.code_postal = property_update['postal_code']
+                if property_update.get('city'):
+                    property.ville = property_update['city']
+                if property_update.get('source'):
+                    property.source_collecte = property_update['source']
+
+                session.commit()
+                session.refresh(property)
+
+                return property.to_dict()
+            return None
+
+    def delete_property(self, property_id: int) -> bool:
+        """Supprime une propriété par ID"""
+        with self.get_session() as session:
+            property = session.query(Property).filter(Property.id_prop == property_id).first()
+            if property:
+                session.delete(property)
+                session.commit()
+                return True
+            return False
 
     def close(self):
         """Ferme la connexion à la base de données"""

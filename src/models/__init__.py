@@ -1,58 +1,63 @@
 # Models Package (C4) - Base de données RGPD
-from sqlalchemy import Column, Integer, String, Float, DateTime, Index, CheckConstraint
+from sqlalchemy import Column, Integer, String, Float, DateTime, Date, Index, CheckConstraint
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
 class Property(Base):
     """Modèle principal pour les propriétés immobilières (C4)"""
-    __tablename__ = 'properties'
+    __tablename__ = 'proprietes_anonymisees'
 
     # Clé primaire
-    id = Column(Integer, primary_key=True, index=True)
+    id_prop = Column(Integer, primary_key=True, index=True)
 
-    # Informations essentielles
-    title = Column(String(255), nullable=False, index=True)
-    price = Column(Integer, nullable=False, index=True)
-    surface = Column(Integer, nullable=False, index=True)
+    # Informations essentielles (noms réels des colonnes)
+    surface_m2 = Column(Integer, nullable=False, index=True)
+    prix_euros = Column(Integer, nullable=False, index=True)
+    prix_m2_euros = Column(Float, nullable=False, index=True)
 
     # Localisation (anonymisée quartier pour RGPD)
-    postal_code = Column(String(5), nullable=False, index=True)
-    city = Column(String(100), nullable=False, index=True)
+    code_postal = Column(String(5), nullable=False, index=True)
+    ville = Column(String(100), nullable=False, index=True)
+    quartier_anonymise = Column(String(50), nullable=True, index=True)
 
     # Métadonnées
-    source = Column(String(50), nullable=False)  # seloger, leboncoin, csv, insee
-    scraped_at = Column(DateTime, nullable=False)
-    scraping_session = Column(String(50))
+    type_bien = Column(String(50), nullable=False)
+    source_collecte = Column(String(20), nullable=False)  # seloger, leboncoin, csv, insee
+    date_collecte = Column(Date, nullable=False)
+    date_anonymisation = Column(DateTime, nullable=True)
+    mois_annee = Column(String(7), nullable=False)
+    created_at = Column(DateTime, nullable=False)
 
     # Contraintes
     __table_args__ = (
-        CheckConstraint('price >= 0', name='check_price_positive'),
-        CheckConstraint('surface > 0', name='check_surface_positive'),
-        Index('idx_location', 'postal_code', 'city'),
-        Index('idx_price_surface', 'price', 'surface'),
-        Index('idx_source_session', 'source', 'scraping_session'),
+        CheckConstraint('prix_euros >= 0', name='check_price_positive'),
+        CheckConstraint('surface_m2 > 0', name='check_surface_positive'),
+        Index('idx_location', 'code_postal', 'ville'),
+        Index('idx_price_surface', 'prix_euros', 'surface_m2'),
+        Index('idx_source_session', 'source_collecte', 'date_collecte'),
     )
 
     @property
     def price_per_m2(self) -> float:
         """Calcule le prix au mètre carré"""
-        if self.surface > 0:
-            return self.price / self.surface
+        if self.surface_m2 > 0:
+            return self.prix_euros / self.surface_m2
         return 0.0
 
     def to_dict(self) -> dict:
         """Convertit l'objet en dictionnaire pour l'API"""
         return {
-            'id': self.id,
-            'title': self.title,
-            'price': self.price,
-            'surface': self.surface,
+            'id': self.id_prop,
+            'title': self.quartier_anonymise,
+            'price': self.prix_euros,
+            'surface': self.surface_m2,
             'price_per_m2': round(self.price_per_m2, 2),
-            'postal_code': self.postal_code,
-            'city': self.city,
-            'source': self.source,
-            'scraped_at': self.scraped_at.isoformat() if self.scraped_at else None,
+            'postal_code': self.code_postal,
+            'city': self.ville,
+            'source': self.source_collecte,
+            'scraped_at': self.date_anonymisation.isoformat() if self.date_anonymisation else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
         }
 
 class DemographicData(Base):
