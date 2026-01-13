@@ -1,223 +1,311 @@
-# Guide pour Rediger le Rapport Professionnel (5 pages)
+# Rapport Professionnel - Observatoire Immobilier Public
 
-Ce guide t'aide a structurer ton rapport de soutenance. Le rapport doit etre concis, professionnel et demontrer ta maitrise des competences C1 a C5.
-
----
-
-## Structure Recommandee
-
-### Page 1 : Introduction et Contexte
-
-**1.1 Presentation du projet (1/2 page)**
-
-Decris en quelques phrases :
-- Nom du projet : Observatoire Immobilier Public
-- Objectif : Collecter et analyser des donnees immobilieres publiques
-- Utilisateurs cibles : Analystes, acheteurs, professionnels du secteur
-
-**1.2 Problematique (1/4 page)**
-
-Explique le besoin :
-- Les donnees immobilieres sont dispersees sur plusieurs sites
-- Pas d'outil centralisé pour analyser le marche
-- Besoin de respecter le RGPD tout en fournissant des statistiques utiles
-
-**1.3 Contraintes techniques (1/4 page)**
-
-Liste les contraintes :
-- Respect du RGPD (anonymisation obligatoire)
-- Securite OWASP (protection des donnees)
-- Performance (temps de reponse < 1 seconde)
-- Multi-sources (5 types de sources differentes)
+**Certification Developpeur en Intelligence Artificielle**
+**E1 : Gestion des donnees**
 
 ---
 
-### Page 2 : Architecture et Technologies
+## Sommaire
 
-**2.1 Choix techniques (1/2 page)**
+I. Automatiser l'extraction des donnees depuis un service web
+   - A. Contexte du projet
+   - B. Specifications techniques
+   - C. Extraction des donnees
 
-| Composant | Technologie | Justification |
-|-----------|-------------|---------------|
-| Langage | Python 3.10 | Simple, nombreuses bibliotheques |
-| Framework API | FastAPI | Documentation auto, performant |
-| Base de donnees | SQLite | Leger, pas besoin de serveur |
-| ORM | SQLAlchemy | Abstraction SQL, securite |
-| Scraping | BeautifulSoup4 | Simple pour HTML |
-| Tests | pytest | Standard Python |
+II. Developper des requetes de type SQL d'extraction des donnees
 
-**2.2 Architecture du projet (1/2 page)**
+III. Developper des regles d'agregation de donnees issues de differentes sources
 
-Decris l'organisation en couches :
+IV. Creer une base de donnees
 
+V. Developper une API mettant a disposition le jeu de donnees
+
+---
+
+## I. Automatiser l'extraction des donnees depuis un service web
+
+### A. Contexte du projet
+
+Le projet "Observatoire Immobilier Public" est un projet personnel developpe dans le cadre de la certification Simplon. Ce projet repond a un besoin concret : les donnees immobilieres sont dispersees sur de nombreux sites web et il n'existe pas d'outil centralise pour analyser le marche immobilier francais de maniere automatisee.
+
+L'objectif est de developper une application permettant de :
+- Collecter automatiquement des donnees immobilieres publiques
+- Agreger et nettoyer ces donnees
+- Les stocker dans une base conforme au RGPD
+- Les exposer via une API REST securisee
+
+Les utilisateurs cibles sont les analystes immobiliers, les acheteurs potentiels et les professionnels du secteur qui souhaitent obtenir des statistiques fiables sur le marche.
+
+L'organisation du travail a suivi les phases suivantes :
+- Phase 1-2 : Collecte multi-sources (C1)
+- Phase 3-4 : Traitement et agregation (C2-C3)
+- Phase 5 : Base de donnees RGPD (C4)
+- Phase 6-7 : API REST (C5)
+- Phase 8 : Tests et documentation
+
+### B. Specifications techniques
+
+Le projet est developpe en Python 3.10. Le code est redige dans Visual Studio Code et versionne sur un depot GitHub.
+
+Technologies utilisees :
+- **Framework API** : FastAPI (documentation automatique, performant)
+- **Base de donnees** : SQLite avec SQLAlchemy (ORM)
+- **Scraping** : BeautifulSoup4, Requests
+- **Traitement** : Pandas, NumPy
+- **Securite** : JWT (python-jose), bcrypt
+- **Tests** : pytest
+
+Architecture du projet :
 ```
 src/
-  scrapers/      -> C1 : Collecte des donnees
-  repositories/  -> C2 : Requetes SQL
-  services/      -> C3 : Traitement et agregation
-  models/        -> C4 : Modeles de donnees RGPD
-  api/           -> C5 : Endpoints REST
+  scrapers/      -> Collecte des donnees (C1)
+  repositories/  -> Requetes SQL (C2)
+  services/      -> Traitement et agregation (C3)
+  models/        -> Modeles de donnees RGPD (C4)
+  api/           -> Endpoints REST (C5)
 ```
 
-Explique pourquoi cette separation :
-- Code plus lisible et maintenable
-- Chaque couche a une responsabilite claire
-- Facilite les tests unitaires
+### C. Extraction des donnees
+
+Les donnees sont extraites a partir de plusieurs types de sources :
+
+1. **Scraping web** : Sites d'annonces immobilieres publiques (SeLoger, LeBonCoin)
+2. **API REST externe** : API INSEE pour les donnees demographiques
+3. **Fichiers de donnees** : Import de fichiers CSV et JSON
+
+Le script d'extraction est disponible dans le dossier `src/scrapers/`. Il comprend :
+- L'initialisation des connexions externes
+- Les regles de collecte pour chaque source
+- La gestion des erreurs et des timeouts
+- La sauvegarde des donnees brutes
+
+Exemple de code d'extraction (scraper SeLoger) :
+```python
+class SeLogerScraper:
+    def __init__(self):
+        self.base_url = "https://www.seloger.com"
+        self.headers = {'User-Agent': 'Mozilla/5.0'}
+
+    def scrape_properties(self, city, max_pages=5):
+        properties = []
+        for page in range(1, max_pages + 1):
+            response = requests.get(url, headers=self.headers)
+            # Extraction des donnees...
+        return properties
+```
 
 ---
 
-### Page 3 : Implementation des Competences C1-C3
+## II. Developper des requetes de type SQL d'extraction des donnees
 
-**3.1 C1 - Collecte Multi-Sources (1/3 page)**
+Le script d'extraction realise des transformations pour nettoyer les donnees :
+- Filtrage des annonces valides
+- Selection et nettoyage des colonnes
+- Suppression des doublons
+- Traitement des valeurs manquantes
 
-Sources implementees :
-- Scraping web : SeLoger, LeBonCoin (annonces publiques)
-- API externe : INSEE (donnees demographiques)
-- Fichiers : Import CSV et JSON
-- Base de donnees : Connexion SQLite existante
+Les requetes SQL sont implementees via le Repository Pattern dans `src/repositories/property_repository.py`.
 
-Resultats :
-- 2000 proprietes collectees
-- 5 sources differentes
-- 20 villes couvertes
+Exemples de requetes :
 
-**3.2 C2 - Requetes SQL (1/3 page)**
-
-Requetes implementees :
-- SELECT avec filtres (ville, prix, surface)
-- JOIN entre proprietes et donnees demographiques
-- GROUP BY pour statistiques par ville
-- Optimisation avec index sur colonnes frequentes
-
-Exemple de requete :
+**Requete simple avec filtres :**
 ```sql
-SELECT ville, AVG(prix_m2_euros), COUNT(*)
+SELECT * FROM proprietes_anonymisees
+WHERE ville = 'Paris' AND prix_euros BETWEEN 100000 AND 500000
+ORDER BY prix_m2_euros DESC
+```
+
+**Requete avec agregation :**
+```sql
+SELECT ville, AVG(prix_m2_euros) as prix_moyen, COUNT(*) as nb_biens
 FROM proprietes_anonymisees
 GROUP BY ville
-ORDER BY AVG(prix_m2_euros) DESC
+ORDER BY prix_moyen DESC
 ```
 
-**3.3 C3 - Traitement et Agregation (1/3 page)**
+**Requete avec jointure :**
+```sql
+SELECT p.*, d.population
+FROM proprietes_anonymisees p
+LEFT JOIN donnees_demographiques d ON p.code_postal = d.postal_code
+WHERE p.ville = 'Lyon'
+```
 
-Traitements implementes :
-- Dedoublonnage des annonces similaires
-- Standardisation des formats (prix, surface, code postal)
-- Validation des regles metier (prix/m2 entre 100 et 50000 euros)
-- Calcul des indicateurs (prix moyen, min, max par ville)
+Les requetes sont optimisees avec des index sur les colonnes frequemment utilisees (ville, code_postal, prix_euros).
 
 ---
 
-### Page 4 : Implementation des Competences C4-C5
+## III. Developper des regles d'agregation de donnees issues de differentes sources
 
-**4.1 C4 - Base de Donnees RGPD (1/2 page)**
+Apres les etapes de nettoyage, le script enregistre les donnees dans la base de donnees et realise l'agregation des differentes sources.
 
-Mesures RGPD implementees :
+Le service d'agregation (`src/services/property_service.py`) effectue :
 
-| Mesure | Implementation |
-|--------|----------------|
-| Anonymisation | Adresses au niveau quartier uniquement |
-| Minimisation | Pas de noms, telephones, emails |
-| Registre traitements | 3 traitements documentes (Article 30) |
-| Retention | 5 ans proprietes, 12 mois logs |
-| Tracabilite | Logs d'acces avec pseudonymisation |
+1. **Dedoublonnage** : Suppression des annonces identiques basee sur titre + code postal + surface + prix
 
-Tables de la base :
-- proprietes_anonymisees (donnees principales)
-- donnees_demographiques (INSEE)
-- registre_traitements_rgpd (conformite)
-- politiques_retention_rgpd (durees conservation)
+2. **Standardisation des formats** :
+   - Prix : suppression des caracteres non numeriques
+   - Surface : conversion en entier (m2)
+   - Code postal : format 5 chiffres
+   - Ville : premiere lettre majuscule
 
-**4.2 C5 - API REST Securisee (1/2 page)**
+3. **Validation des regles metier** :
+   - Prix au m2 entre 100 et 50 000 euros
+   - Surface entre 10 et 1000 m2
+   - Code postal francais valide
 
-Endpoints implementes :
+4. **Calcul des indicateurs** :
+   - Prix moyen par ville
+   - Prix au m2 moyen
+   - Distribution des prix (quartiles)
+
+Exemple de fonction de nettoyage :
+```python
+def standardize_property_data(self, prop):
+    # Standardisation du prix
+    prop['price'] = int(re.sub(r'[^\d]', '', str(prop['price'])))
+
+    # Standardisation du code postal
+    prop['postal_code'] = prop['postal_code'].strip().zfill(5)
+
+    # Standardisation de la ville
+    prop['city'] = prop['city'].strip().title()
+
+    return prop
+```
+
+Resultats de l'agregation :
+- 2000 proprietes nettoyees et validees
+- 20 villes couvertes
+- 4 types de sources agregees
+
+---
+
+## IV. Creer une base de donnees
+
+### Modele conceptuel des donnees
+
+```
+PROPRIETE_ANONYMISEE              DONNEE_DEMOGRAPHIQUE
+-------------------               --------------------
+id_prop (PK)                      id_demo (PK)
+code_postal          n -------- 1 postal_code
+ville                             city
+quartier_anonymise                population
+surface_m2                        source
+prix_euros
+prix_m2_euros
+type_bien
+source_collecte
+date_collecte
+```
+
+### Modele physique des donnees
+
+| Table | Colonne | Type | Contrainte |
+|-------|---------|------|------------|
+| proprietes_anonymisees | id_prop | INTEGER | PK |
+| | code_postal | VARCHAR(5) | INDEX |
+| | ville | VARCHAR(100) | INDEX |
+| | quartier_anonymise | VARCHAR(50) | |
+| | surface_m2 | INTEGER | > 0 |
+| | prix_euros | INTEGER | > 0 |
+| | prix_m2_euros | DECIMAL | |
+| | source_collecte | VARCHAR(20) | |
+| | date_collecte | DATE | |
+
+La base de donnees SQLite est choisie car elle est legere, ne necessite pas de serveur et convient pour un projet de demonstration.
+
+### Conformite RGPD
+
+Les donnees stockees ne contiennent pas d'adresses precises (anonymisation au niveau quartier). Les mesures RGPD implementees sont :
+
+| Article RGPD | Mesure implementee |
+|--------------|-------------------|
+| Art. 5 - Minimisation | Seules les donnees necessaires sont collectees |
+| Art. 25 - Privacy by design | Anonymisation des la collecte |
+| Art. 30 - Registre | 3 traitements documentes |
+| Art. 32 - Securite | Chiffrement, acces controle |
+
+Tables RGPD creees :
+- `registre_traitements_rgpd` : Documentation des traitements
+- `politiques_retention_rgpd` : Durees de conservation (5 ans donnees, 12 mois logs)
+- `logs_access_rgpd` : Tracabilite des acces
+
+---
+
+## V. Developper une API mettant a disposition le jeu de donnees
+
+L'API REST est developpee avec FastAPI. Elle est protegee par authentification JWT.
+
+### Documentation de l'API
+
+L'API dispose d'une documentation automatique accessible sur `/api/v1/docs` (Swagger UI).
+
+### Endpoints disponibles
 
 | Methode | Endpoint | Description |
 |---------|----------|-------------|
-| GET | /api/v1/health | Verification sante API |
-| POST | /api/v1/auth/token | Authentification JWT |
-| GET | /api/v1/properties | Liste avec filtres |
-| GET | /api/v1/properties/{id} | Detail propriete |
+| GET | /api/v1/health | Verification de sante |
+| POST | /api/v1/auth/token | Authentification (JWT) |
+| GET | /api/v1/auth/me | Info utilisateur connecte |
+| GET | /api/v1/properties | Liste des proprietes |
+| GET | /api/v1/properties/{id} | Detail d'une propriete |
+| POST | /api/v1/properties | Creer une propriete |
+| PUT | /api/v1/properties/{id} | Modifier une propriete |
+| DELETE | /api/v1/properties/{id} | Supprimer une propriete |
 | GET | /api/v1/analytics/overview | Statistiques globales |
-| GET | /api/v1/analytics/cities | Stats par ville |
+| GET | /api/v1/analytics/cities | Statistiques par ville |
 
-Securite OWASP :
-- Authentification JWT (tokens 30 min)
-- Validation des entrees (Pydantic)
-- Protection injection SQL (ORM)
-- Documentation OpenAPI automatique
+### Securite
 
----
+- **Authentification** : JWT avec expiration 30 minutes
+- **Validation** : Schemas Pydantic pour toutes les entrees
+- **Protection SQL** : ORM SQLAlchemy (pas de requetes brutes)
+- **CORS** : Configuration des origines autorisees
 
-### Page 5 : Resultats et Conclusion
+Exemple d'endpoint :
+```python
+@router.get("/properties/", response_model=List[PropertyResponse])
+async def get_properties(
+    skip: int = 0,
+    limit: int = 100,
+    city: Optional[str] = None,
+    service: PropertyService = Depends(get_property_service)
+):
+    return service.get_properties(skip, limit, city)
+```
 
-**5.1 Resultats des Tests (1/3 page)**
+### Tests
 
-| Competence | Tests | Resultat |
-|------------|-------|----------|
-| C1 - Collecte | 23/24 | 95.8% |
-| C2 - SQL | 5/5 | 100% |
-| C3 - Traitement | 5/5 | 100% |
-| C4 - RGPD | Conforme | OK |
-| C5 - API | 34/34 | 100% |
+34 tests pytest couvrent l'ensemble des endpoints :
+- Tests health check : 4 tests
+- Tests authentification : 7 tests
+- Tests CRUD proprietes : 10 tests
+- Tests validation : 4 tests
+- Tests analytics : 4 tests
+- Tests HTTP : 3 tests
+- Tests integration : 3 tests
 
-**5.2 Donnees Collectees (1/3 page)**
-
-Statistiques du projet :
-- 2000 proprietes en base
-- Prix moyen : 290 000 euros
-- Surface moyenne : 74 m2
-- Prix/m2 moyen : 3 943 euros
-- Paris le plus cher (12 500 euros/m2)
-- Saint-Etienne le moins cher (2 258 euros/m2)
-
-**5.3 Conclusion (1/3 page)**
-
-Competences acquises :
-- Collecte de donnees multi-sources
-- Developpement d'API REST securisees
-- Conformite RGPD et securite OWASP
-- Tests automatises et documentation
-
-Ameliorations possibles :
-- Ajouter plus de sources de donnees
-- Interface web pour visualiser les statistiques
-- Predictions de prix avec machine learning
+Resultat : **34/34 tests passes (100%)**
 
 ---
 
-## Conseils de Redaction
+## Donnees du projet
 
-**A faire :**
-- Utiliser des phrases courtes et claires
-- Mettre des tableaux pour les donnees chiffrees
-- Inclure 2-3 extraits de code courts (5-10 lignes max)
-- Numerotez les pages
+### Statistiques globales
 
-**A eviter :**
-- Pas d'emojis dans un rapport professionnel
-- Pas de copier-coller de code entier
-- Pas de jargon technique non explique
-- Pas de fautes d'orthographe
-
-**Format recommande :**
-- Police : Arial ou Calibri, taille 11
-- Interligne : 1.5
-- Marges : 2.5 cm
-- Pages numerotees
-
----
-
-## Donnees Reelles du Projet (a utiliser dans le rapport)
-
-### Sources de donnees
-| Source | Nombre | Pourcentage |
-|--------|--------|-------------|
-| json_import | 432 | 21.6% |
-| csv_import | 422 | 21.1% |
-| seloger | 391 | 19.5% |
-| insee | 389 | 19.5% |
-| leboncoin | 366 | 18.3% |
+| Metrique | Valeur |
+|----------|--------|
+| Nombre de proprietes | 2 000 |
+| Prix minimum | 25 906 euros |
+| Prix maximum | 3 545 166 euros |
+| Prix moyen | 290 021 euros |
+| Surface moyenne | 74 m2 |
+| Prix/m2 moyen | 3 943 euros |
 
 ### Prix par ville (Top 5)
+
 | Ville | Prix/m2 moyen |
 |-------|---------------|
 | Paris | 12 504 euros |
@@ -226,22 +314,25 @@ Ameliorations possibles :
 | Bordeaux | 4 705 euros |
 | Aix-en-Provence | 4 574 euros |
 
-### Statistiques globales
-- Nombre total de proprietes : 2 000
-- Prix minimum : 25 906 euros
-- Prix maximum : 3 545 166 euros
-- Prix moyen : 290 021 euros
-- Surface minimum : 15 m2
-- Surface maximum : 200 m2
-- Surface moyenne : 74 m2
+### Sources de donnees
 
-### Conformite RGPD
-- 3 traitements dans le registre
-- 4 politiques de retention
-- 6 tables dont 3 specifiques RGPD
-- Anonymisation : niveau quartier (pas d'adresses)
+| Source | Nombre | Type |
+|--------|--------|------|
+| seloger | 391 | Scraping web |
+| leboncoin | 366 | Scraping web |
+| insee | 389 | API REST |
+| csv_import | 422 | Fichier |
+| json_import | 432 | Fichier |
 
-### Tests API
-- 34 tests pytest
-- 100% de reussite
-- Categories testees : health, auth, CRUD, validation, analytics
+---
+
+## Conclusion
+
+Ce projet a permis de valider les 5 competences du bloc E1 :
+- **C1** : Extraction multi-sources (scraping, API, fichiers)
+- **C2** : Requetes SQL optimisees
+- **C3** : Agregation et nettoyage des donnees
+- **C4** : Base de donnees conforme RGPD
+- **C5** : API REST securisee avec documentation
+
+Le code source est versionne et accessible sur GitHub.

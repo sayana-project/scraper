@@ -194,6 +194,6 @@ if __name__ == "__main__":
     scraper = LeBonCoinScraper()
     properties = scraper.run_scraper(max_pages=1)
 
-    print(f"\n🏠 {len(properties)} propriétés extraites:")
+    print(f"\n {len(properties)} propriétés extraites:")
     for prop in properties[:3]:  # Limiter l'affichage
         print(f"- {prop['title']}: {prop['price']}€ ({prop['surface']}m²) à {prop['city']} ({prop['postal_code']})")

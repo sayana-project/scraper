@@ -234,15 +234,15 @@ if __name__ == "__main__":
     # Test import CSV
     print(f"\n📄 Test import CSV: {csv_file}")
     csv_properties = importer.import_file(str(csv_file))
-    print(f"✅ {len(csv_properties)} propriétés importées du CSV")
+    print(f" {len(csv_properties)} propriétés importées du CSV")
 
     # Test import JSON
     print(f"\n📄 Test import JSON: {json_file}")
     json_properties = importer.import_file(str(json_file))
-    print(f"✅ {len(json_properties)} propriétés importées du JSON")
+    print(f" {len(json_properties)} propriétés importées du JSON")
 
     # Affichage des propriétés importées
     all_properties = csv_properties + json_properties
-    print(f"\n🏠 Total: {len(all_properties)} propriétés importées")
+    print(f"\n Total: {len(all_properties)} propriétés importées")
     for prop in all_properties[:3]:
         print(f"- {prop['title']}: {prop['price']}€ ({prop['surface']}m²)")

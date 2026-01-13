@@ -3,22 +3,22 @@
 ## 📍 Vue d'ensemble du parcours
 
 ```
-🚀 Lancement → 🔍 Collecte → 🧠 Traitement → 💾 Stockage → 🌐 API → 🎓 Diplôme
+ Lancement → 🔍 Collecte → 🧠 Traitement → 💾 Stockage →  API → 🎓 Diplôme
      │              │            │            │        │           │
    Semaine 1     Semaine 2    Semaines 3-4  Semaine 5  Semaines 6-7   Semaine 8
 ```
 
 ---
 
-## 🎯 Objectif Final
+##  Objectif Final
 **Développer un observatoire immobilier automatisé qui respecte le RGPD et les meilleures pratiques OWASP pour valider les 5 compétences du diplôme Simplon.co**
 
 ---
 
-## 📅 Timeline Détaillée
+##  Timeline Détaillée
 
 ### 🏁 Semaine 1 : Fondations (20% du projet)
-**🎯 Objectif** : Mettre en place l'infrastructure technique
+** Objectif** : Mettre en place l'infrastructure technique
 
 ```
 Jour 1-2 : Architecture & Git
@@ -37,12 +37,12 @@ Jour 5 : Planning & Validation
 └── Création scripts de configuration
 ```
 
-**📊 Progression attendue** : 100% de la phase 1
+** Progression attendue** : 100% de la phase 1
 
 ---
 
 ### 🔍 Semaine 2 : Collecte Multi-sources (C1) (40% du projet)
-**🎯 Objectif** : Mettre en œuvre la compétence C1 - Automatisation de l'extraction
+** Objectif** : Mettre en œuvre la compétence C1 - Automatisation de l'extraction
 
 ```
 Jour 1-3 : Scraping Web
@@ -56,16 +56,16 @@ Jour 4-5 : API & Fichiers
 └── Tests robustesse extraction
 ```
 
-**🎯 C1 - Validé si** :
-- ✅ Scripts extraction fonctionnels
-- ✅ Multi-sources (web, API, fichiers, BDD)
-- ✅ Gestion d'erreurs robuste
-- ✅ Scripts versionnés sur Git
+** C1 - Validé si** :
+-  Scripts extraction fonctionnels
+-  Multi-sources (web, API, fichiers, BDD)
+-  Gestion d'erreurs robuste
+-  Scripts versionnés sur Git
 
 ---
 
 ### 🧠 Semaines 3-4 : Traitement & Agrégation (C2-C3) (60% du projet)
-**🎯 Objectif** : Valider les compétences C2 et C3
+** Objectif** : Valider les compétences C2 et C3
 
 #### Semaine 3 : Requêtes SQL (C2)
 ```
@@ -93,16 +93,16 @@ Jour 4-5 : Fusion & Qualité
 └── Scripts de nettoyage complets
 ```
 
-**🎯 C2-C3 - Validés si** :
-- ✅ Requêtes SQL optimisées documentées
-- ✅ Scripts agrégation fonctionnels
-- ✅ Données nettoyées et normalisées
-- ✅ Tests qualité des données
+** C2-C3 - Validés si** :
+-  Requêtes SQL optimisées documentées
+-  Scripts agrégation fonctionnels
+-  Données nettoyées et normalisées
+-  Tests qualité des données
 
 ---
 
 ### 💾 Semaine 5 : Base de Données RGPD (C4) (80% du projet)
-**🎯 Objectif** : Créer une base de données conforme au RGPD
+** Objectif** : Créer une base de données conforme au RGPD
 
 ```
 Jour 1-2 : Modélisation Merise
@@ -121,16 +121,16 @@ Jour 5 : Import & Validation
 └── Registre traitements RGPD
 ```
 
-**🎯 C4 - Validé si** :
-- ✅ Modèles Merise documentés
-- ✅ Base de données fonctionnelle
-- ✅ Conformité RGPD complète
-- ✅ Scripts import/testés
+** C4 - Validé si** :
+-  Modèles Merise documentés
+-  Base de données fonctionnelle
+-  Conformité RGPD complète
+-  Scripts import/testés
 
 ---
 
-### 🌐 Semaines 6-7 : API REST Sécurisée (C5) (90% du projet)
-**🎯 Objectif** : Développer l'API REST et valider la compétence C5
+###  Semaines 6-7 : API REST Sécurisée (C5) (90% du projet)
+** Objectif** : Développer l'API REST et valider la compétence C5
 
 #### Semaine 6 : Développement API
 ```
@@ -158,16 +158,16 @@ Jour 4-5 : Documentation
 └── Exemples code client
 ```
 
-**🎯 C5 - Validé si** :
-- ✅ API REST fonctionnelle et sécurisée
-- ✅ Documentation OpenAPI complète
-- ✅ Tests sécurité implémentés
-- ✅ Authentification robuste
+** C5 - Validé si** :
+-  API REST fonctionnelle et sécurisée
+-  Documentation OpenAPI complète
+-  Tests sécurité implémentés
+-  Authentification robuste
 
 ---
 
 ### 🎓 Semaine 8 : Finalisation & Soutenance (100% du projet)
-**🎯 Objectif** : Préparer l'évaluation et valider le diplôme
+** Objectif** : Préparer l'évaluation et valider le diplôme
 
 ```
 Jour 1-2 : Documentation Finale
@@ -188,7 +188,7 @@ Jour 5 : Préparation Soutenance
 
 ---
 
-## 🎯 Jalons Critiques (Deadlines)
+##  Jalons Critiques (Deadlines)
 
 | Jalon | Date Limite | Compétences Validées | Livrable Principal |
 |-------|-------------|---------------------|-------------------|
@@ -200,7 +200,7 @@ Jour 5 : Préparation Soutenance
 
 ---
 
-## ⚠️ Points de Vigilance
+##  Points de Vigilance
 
 ### 🔴 Risques Bloquants
 - **Changements sites cibles** : Avoir plans B de sources
@@ -219,15 +219,15 @@ Jour 5 : Préparation Soutenance
 
 ---
 
-## 📊 Indicateurs de Progression
+##  Indicateurs de Progression
 
-### 🎯 KPIs Techniques
+###  KPIs Techniques
 - **Couverture de tests** : ≥ 80%
 - **Performance scrapers** : < 2s par page
 - **Temps réponse API** : < 200ms
 - **Disponibilité service** : > 99%
 
-### 📈 Progression Compétences
+###  Progression Compétences
 ```
 C1 ████████░░ 80% (Semaine 2)
 C2     ████████░░ 80% (Semaine 3)
@@ -241,21 +241,21 @@ C5                 ████████░░ 80% (Semaine 7)
 
 ## 🏆 Conditions de Succès
 
-### ✅ Critères de Validation
+###  Critères de Validation
 - **Fonctionnalité** : Pipeline complet (scraping → API) opérationnel
 - **Qualité** : Tests > 80%, code documenté, Git propre
 - **Conformité** : RGPD validé, OWASP implémenté
 - **Soutenance** : Démo réussie + questions répondues
 
-### 🎯 Succès Diplôme
-1. **5 compétences C1-C5 validées** ✅
-2. **Rapport professionnel accepté** ✅
-3. **Soutenance orale réussie** ✅
-4. **Code source fonctionnel** ✅
+###  Succès Diplôme
+1. **5 compétences C1-C5 validées** 
+2. **Rapport professionnel accepté** 
+3. **Soutenance orale réussie** 
+4. **Code source fonctionnel** 
 
 ---
 
-## 🚀 Next Steps Immédiats
+##  Next Steps Immédiats
 
 **Aujourd'hui** :
 - [ ] Valider architecture technique finale

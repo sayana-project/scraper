@@ -278,7 +278,7 @@ class C1Validator:
 
         # Résultats finaux
         logger.info("=" * 60)
-        logger.info("📊 RÉSULTATS VALIDATION C1")
+        logger.info(" RÉSULTATS VALIDATION C1")
         logger.info("=" * 60)
         logger.info(f"Tests passés: {self.validation_passed}/{self.validation_total}")
 
@@ -286,10 +286,10 @@ class C1Validator:
         logger.info(f"Taux de réussite: {success_rate:.1f}%")
 
         if success_rate >= 80:
-            logger.info("✅ COMPÉTENCE C1 VALIDÉE !")
+            logger.info(" COMPÉTENCE C1 VALIDÉE !")
             return True
         else:
-            logger.error("❌ COMPÉTENCE C1 NON VALIDÉE")
+            logger.error(" COMPÉTENCE C1 NON VALIDÉE")
             return False
 
 # Point d'entrée principal
@@ -299,10 +299,10 @@ if __name__ == "__main__":
 
     if success:
         print("\n🎉 PHASE 2 - C1 COLLECTE MULTI-SOURCES TERMINÉE AVEC SUCCÈS")
-        print("✅ Tous les scripts d'extraction sont fonctionnels")
-        print("✅ Tests robustesse validés")
-        print("✅ Sources multi-formats supportées")
-        print("✅ Documentation des sources complète")
+        print(" Tous les scripts d'extraction sont fonctionnels")
+        print(" Tests robustesse validés")
+        print(" Sources multi-formats supportées")
+        print(" Documentation des sources complète")
         print("\n👉 Prêt pour la Phase 3: C2-C3 Traitement et Agrégation")
     else:
-        print("\n⚠️ PHASE 2 - C1 nécessite des corrections")
+        print("\n PHASE 2 - C1 nécessite des corrections")

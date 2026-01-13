@@ -121,7 +121,7 @@ class ScraperManager:
             return all_properties
 
         except Exception as e:
-            logger.error(f"❌ Erreur sauvegarde: {e}")
+            logger.error(f" Erreur sauvegarde: {e}")
             return []
 
     def _save_as_csv(self, properties: List[Dict], csv_file: Path):
@@ -138,7 +138,7 @@ class ScraperManager:
                 writer.writeheader()
                 writer.writerows(properties)
 
-        logger.info(f"📊 CSV sauvegardé: {csv_file}")
+        logger.info(f" CSV sauvegardé: {csv_file}")
 
     def get_statistics(self, results: Dict[str, List[Dict]]) -> Dict:
         """Génère des statistiques sur les résultats"""
@@ -170,7 +170,7 @@ class ScraperManager:
 
     def run_full_collection(self, max_pages: int = 1) -> Dict:
         """Lance la collection complète et sauvegarde"""
-        logger.info("🚀 Lancement collection C1 complète")
+        logger.info(" Lancement collection C1 complète")
 
         # 1. Scraping multi-sources
         results = self.scrape_all_sources(max_pages)
@@ -181,7 +181,7 @@ class ScraperManager:
         # 3. Statistiques
         stats = self.get_statistics(results)
 
-        logger.info("📊 Statistiques de la collection:")
+        logger.info(" Statistiques de la collection:")
         for source, data in stats.items():
             if isinstance(data, dict):
                 logger.info(f"- {source}: {data['count']} propriétés")

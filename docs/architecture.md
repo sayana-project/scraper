@@ -1,6 +1,6 @@
-# 🏗️ Architecture Technique - Observatoire Immobilier
+#  Architecture Technique - Observatoire Immobilier
 
-## 📋 Vue d'Ensemble
+##  Vue d'Ensemble
 
 **Architecture N-Tiers simplifiée pour développeur junior**
 - **Frontend** : API REST (pas d'interface web complexe)
@@ -10,16 +10,16 @@
 
 ---
 
-## 🎯 Principes d'Architecture
+##  Principes d'Architecture
 
-### ✅ Adoptés (Niveau Junior)
+###  Adoptés (Niveau Junior)
 - **Séparation des responsabilités** : Chaque classe a un rôle clair
 - **DTO (Data Transfer Objects)** : Validation avec Pydantic
 - **Repository Pattern** : Abstraction de l'accès aux données
 - **Service Layer** : Logique métier isolée
 - **Dependency Injection** : Injection via FastAPI
 
-### ❌ Évités (Trop complexe pour Junior)
+###  Évités (Trop complexe pour Junior)
 - Design Patterns avancés (Factory, Strategy...)
 - Microservices
 - Systèmes de messagerie complexes
@@ -27,7 +27,7 @@
 
 ---
 
-## 📁 Structure des Dossiers
+##  Structure des Dossiers
 
 ```
 src/
@@ -72,7 +72,7 @@ src/
 
 ---
 
-## 🏗️ Patterns Architecture
+##  Patterns Architecture
 
 ### 1. Repository Pattern (C2)
 **Objectif** : Abstraire l'accès aux données
@@ -201,7 +201,7 @@ def get_property_service(
 
 ---
 
-## 🔄 Flux de Données
+##  Flux de Données
 
 ### 1. Flux Scraping (C1)
 ```
@@ -222,7 +222,7 @@ Raw Data → Service Layer (nettoyage) → Repository (C2) → Database
 
 ---
 
-## 🛡️ Sécurité OWASP
+##  Sécurité OWASP
 
 ### 1. Validation des Entrées
 ```python
@@ -258,7 +258,7 @@ async def get_properties(request: Request):
 
 ---
 
-## 🎯 Mapping Compétences → Architecture
+##  Mapping Compétences → Architecture
 
 | Compétence | Éléments Architecture | Fichiers Clés |
 |------------|----------------------|---------------|
@@ -270,15 +270,15 @@ async def get_properties(request: Request):
 
 ---
 
-## 📊 Avantages de cette Architecture
+##  Avantages de cette Architecture
 
-### ✅ Pour le Jury
+###  Pour le Jury
 - **Code organisé** : Séparation claire des responsabilités
 - **Maintenable** : Facile à faire évoluer
 - **Testable** : Mock possible pour chaque couche
 - **Professionnel** : Montre compréhension patterns standards
 
-### ✅ Pour le Développement
+###  Pour le Développement
 - **Modulaire** : Changer une partie sans casser le reste
 - **Scalable** : Ajout facile de nouvelles fonctionnalités
 - **Sécurisé** : Validation à plusieurs niveaux
@@ -286,7 +286,7 @@ async def get_properties(request: Request):
 
 ---
 
-## 🚀 Exemple d'Utilisation Complète
+##  Exemple d'Utilisation Complète
 
 ```python
 # api/endpoints/properties.py

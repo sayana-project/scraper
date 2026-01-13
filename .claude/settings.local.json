@@ -8,7 +8,10 @@
       "Bash(git checkout:*)",
       "Bash(python:*)",
       "Bash(pip install:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(sqlite3:*)",
+      "Bash(dir:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

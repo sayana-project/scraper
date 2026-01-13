@@ -67,10 +67,10 @@ class RgpdImplementation:
                 'migrate_data': migrate_to_rgpd_compliance
             }
 
-            logger.info("✅ Modèles RGPD importés avec succès")
+            logger.info(" Modèles RGPD importés avec succès")
 
         except ImportError as e:
-            logger.error(f"❌ Erreur import modèles RGPD: {e}")
+            logger.error(f" Erreur import modèles RGPD: {e}")
             raise
 
     def run_phase_4_c4(self) -> Dict[str, Any]:
@@ -99,26 +99,26 @@ class RgpdImplementation:
 
         try:
             # 1. Création des tables RGPD (MCD -> MLD -> MPD)
-            logger.info("🏗️ ÉTAPE 1: Création des tables RGPD (MCD-MLD-MPD)")
+            logger.info(" ÉTAPE 1: Création des tables RGPD (MCD-MLD-MPD)")
             phase_4_results['database_creation'] = self._create_rgpd_database()
 
             if not phase_4_results['database_creation']['success']:
                 raise Exception("Échec création base de données RGPD")
 
             # 2. Initialisation du registre des traitements (Art. 30 RGPD)
-            logger.info("📋 ÉTAPE 2: Registre des traitements RGPD")
+            logger.info(" ÉTAPE 2: Registre des traitements RGPD")
             self.rgpd_functions['init_registre'](session)
             phase_4_results['registry_initialized'] = True
             self._log_rgpd_access(session, 'registre_traitements_rgpd', 'ECRITURE', 'Initialisation Art.30 RGPD')
 
             # 3. Initialisation des politiques de rétention (Art. 5(1) RGPD)
-            logger.info("⏰ ÉTAPE 3: Politiques de rétention RGPD")
+            logger.info(" ÉTAPE 3: Politiques de rétention RGPD")
             self.rgpd_functions['init_politiques'](session)
             phase_4_results['policies_initialized'] = True
             self._log_rgpd_access(session, 'politiques_retention_rgpd', 'ECRITURE', 'Configuration Art.5(1) RGPD')
 
             # 4. Migration et anonymisation des données existantes
-            logger.info("🔄 ÉTAPE 4: Migration et anonymisation des données")
+            logger.info(" ÉTAPE 4: Migration et anonymisation des données")
             phase_4_results['data_migration'] = self._migrate_existing_data(session)
 
             # 5. Création des triggers RGPD (automatisation)
@@ -128,21 +128,21 @@ class RgpdImplementation:
             self._log_rgpd_access(session, 'triggers_rgpd', 'ECRITURE', 'Configuration triggers automatisés')
 
             # 6. Validation complète de conformité RGPD
-            logger.info("✅ ÉTAPE 6: Validation conformité RGPD")
+            logger.info(" ÉTAPE 6: Validation conformité RGPD")
             phase_4_results['rgpd_compliance'] = self.rgpd_functions['validate_compliance'](session)
             self._log_rgpd_access(session, 'validation_rgpd', 'LECTURE', 'Audit complet Art.5/32 RGPD')
 
             # 7. Rapport final et documentation
-            logger.info("📊 ÉTAPE 7: Rapport final RGPD")
+            logger.info(" ÉTAPE 7: Rapport final RGPD")
             phase_4_results['validation_results'] = self._generate_final_report(phase_4_results)
 
             phase_4_results['success'] = True
             phase_4_results['end_time'] = datetime.now().isoformat()
 
-            logger.info("✅ PHASE 4 - C4 : BASE DE DONNÉES RGPD TERMINÉE AVEC SUCCÈS")
+            logger.info(" PHASE 4 - C4 : BASE DE DONNÉES RGPD TERMINÉE AVEC SUCCÈS")
 
         except Exception as e:
-            logger.error(f"❌ Erreur critique Phase 4: {e}")
+            logger.error(f" Erreur critique Phase 4: {e}")
             phase_4_results['success'] = False
             phase_4_results['error'] = str(e)
             session.rollback()
@@ -183,14 +183,14 @@ class RgpdImplementation:
             }
 
             if result['success']:
-                logger.info(f"✅ Base de données RGPD créée : {result['tables_created']}/{result['tables_expected']} tables")
+                logger.info(f" Base de données RGPD créée : {result['tables_created']}/{result['tables_expected']} tables")
             else:
-                logger.error(f"❌ Tables manquantes : {result['tables_missing']}")
+                logger.error(f" Tables manquantes : {result['tables_missing']}")
 
             return result
 
         except Exception as e:
-            logger.error(f"❌ Erreur création base de données RGPD: {e}")
+            logger.error(f" Erreur création base de données RGPD: {e}")
             return {'success': False, 'error': str(e), 'created_at': datetime.now().isoformat()}
 
     def _migrate_existing_data(self, session: Session) -> Dict[str, Any]:
@@ -200,7 +200,7 @@ class RgpdImplementation:
             source_data = self._load_source_data()
 
             if not source_data['properties'] and not source_data['demographics']:
-                logger.warning("⚠️ Aucune donnée source à migrer")
+                logger.warning(" Aucune donnée source à migrer")
                 return {'success': True, 'migrated_properties': 0, 'migrated_demographics': 0, 'created_statistics': 0}
 
             # Migration avec fonction RGPD
@@ -228,12 +228,12 @@ class RgpdImplementation:
                 'migration_date': datetime.now().isoformat()
             }
 
-            logger.info(f"✅ Migration RGPD terminée : {result['migrated_properties']} propriétés, {result['migrated_demographics']} démographies")
+            logger.info(f" Migration RGPD terminée : {result['migrated_properties']} propriétés, {result['migrated_demographics']} démographies")
 
             return result
 
         except Exception as e:
-            logger.error(f"❌ Erreur migration RGPD: {e}")
+            logger.error(f" Erreur migration RGPD: {e}")
             return {'success': False, 'error': str(e), 'migration_date': datetime.now().isoformat()}
 
     def _load_source_data(self) -> Dict[str, List[Dict]]:
@@ -246,17 +246,17 @@ class RgpdImplementation:
             if properties_file.exists():
                 with open(properties_file, 'r', encoding='utf-8') as f:
                     source_data['properties'] = json.load(f)
-                logger.info(f"✅ Propriétés chargées : {len(source_data['properties'])}")
+                logger.info(f" Propriétés chargées : {len(source_data['properties'])}")
 
             # Chargement démographie générée
             demographics_file = self.data_dir / "generated_demographics.json"
             if demographics_file.exists():
                 with open(demographics_file, 'r', encoding='utf-8') as f:
                     source_data['demographics'] = json.load(f)
-                logger.info(f"✅ Démographie chargée : {len(source_data['demographics'])}")
+                logger.info(f" Démographie chargée : {len(source_data['demographics'])}")
 
         except Exception as e:
-            logger.error(f"❌ Erreur chargement données source : {e}")
+            logger.error(f" Erreur chargement données source : {e}")
 
         return source_data
 
@@ -302,12 +302,12 @@ class RgpdImplementation:
                 statistics.append(stat.to_dict())
 
             session.commit()
-            logger.info(f"✅ Statistiques agrégées créées : {len(statistics)} enregistrements")
+            logger.info(f" Statistiques agrégées créées : {len(statistics)} enregistrements")
             return statistics
 
         except Exception as e:
             session.rollback()
-            logger.error(f"❌ Erreur création statistiques agrégées : {e}")
+            logger.error(f" Erreur création statistiques agrégées : {e}")
             return []
 
     def _log_rgpd_access(self, session: Session, table_name: str, access_type: str, reason: str = None):
@@ -322,12 +322,12 @@ class RgpdImplementation:
                 result='SUCCES'
             )
         except Exception as e:
-            logger.warning(f"⚠️ Erreur logging accès RGPD: {e}")
+            logger.warning(f" Erreur logging accès RGPD: {e}")
 
     def _generate_final_report(self, phase_4_results: Dict[str, Any]) -> Dict[str, Any]:
         """Génère le rapport final de conformité RGPD"""
         logger.info("=" * 80)
-        logger.info("📊 RAPPORT FINAL PHASE 4 - C4 : BASE DE DONNÉES RGPD")
+        logger.info(" RAPPORT FINAL PHASE 4 - C4 : BASE DE DONNÉES RGPD")
         logger.info("=" * 80)
 
         rapport = {
@@ -381,45 +381,45 @@ class RgpdImplementation:
     def _display_compliance_report(self, rapport: Dict[str, Any]):
         """Affiche le rapport de conformité RGPD"""
 
-        logger.info("🏗️ ARCHITECTURE MERISE :")
-        logger.info(f"   • MCD (Modèle Conceptuel) : {'✅ CRÉÉ' if rapport['architecture_modeling']['mcd_created'] else '❌ MANQUANT'}")
-        logger.info(f"   • MLD (Modèle Logique) : {'✅ CRÉÉ' if rapport['architecture_modeling']['mld_created'] else '❌ MANQUANT'}")
-        logger.info(f"   • MPD (Modèle Physique) : {'✅ IMPLÉMENTÉ' if rapport['architecture_modeling']['mpd_implemented'] else '❌ MANQUANT'}")
+        logger.info(" ARCHITECTURE MERISE :")
+        logger.info(f"   • MCD (Modèle Conceptuel) : {' CRÉÉ' if rapport['architecture_modeling']['mcd_created'] else ' MANQUANT'}")
+        logger.info(f"   • MLD (Modèle Logique) : {' CRÉÉ' if rapport['architecture_modeling']['mld_created'] else ' MANQUANT'}")
+        logger.info(f"   • MPD (Modèle Physique) : {' IMPLÉMENTÉ' if rapport['architecture_modeling']['mpd_implemented'] else ' MANQUANT'}")
 
-        logger.info("\n🗄️ BASE DE DONNÉES :")
+        logger.info("\n BASE DE DONNÉES :")
         db_impl = rapport['database_implementation']
         if db_impl.get('success'):
-            logger.info(f"   ✅ Tables créées : {db_impl.get('tables_created', 0)}/{db_impl.get('tables_expected', 0)}")
-            logger.info(f"   ✅ Fichier base : {db_impl.get('database_file', 'N/A')}")
+            logger.info(f"    Tables créées : {db_impl.get('tables_created', 0)}/{db_impl.get('tables_expected', 0)}")
+            logger.info(f"    Fichier base : {db_impl.get('database_file', 'N/A')}")
         else:
-            logger.info(f"   ❌ Erreur création : {db_impl.get('error', 'Inconnue')}")
+            logger.info(f"    Erreur création : {db_impl.get('error', 'Inconnue')}")
 
-        logger.info("\n🔄 MIGRATION DE DONNÉES :")
+        logger.info("\n MIGRATION DE DONNÉES :")
         migration = rapport['data_migration']
         if migration.get('success'):
-            logger.info(f"   ✅ Propriétés migrées : {migration.get('migrated_properties', 0)}")
-            logger.info(f"   ✅ Démographie migrée : {migration.get('migrated_demographics', 0)}")
-            logger.info(f"   ✅ Statistiques créées : {migration.get('created_statistics', 0)}")
+            logger.info(f"    Propriétés migrées : {migration.get('migrated_properties', 0)}")
+            logger.info(f"    Démographie migrée : {migration.get('migrated_demographics', 0)}")
+            logger.info(f"    Statistiques créées : {migration.get('created_statistics', 0)}")
             if migration.get('errors'):
-                logger.warning(f"   ⚠️ Erreurs migration : {len(migration['errors'])}")
+                logger.warning(f"    Erreurs migration : {len(migration['errors'])}")
         else:
-            logger.info(f"   ❌ Erreur migration : {migration.get('error', 'Inconnue')}")
+            logger.info(f"    Erreur migration : {migration.get('error', 'Inconnue')}")
 
-        logger.info("\n🛡️ CONFORMITÉ RGPD :")
+        logger.info("\n CONFORMITÉ RGPD :")
         compliance = rapport['rgpd_compliance']
         if compliance:
             score = compliance.get('score_conformite', 0)
             status = compliance.get('conformite_globale', False)
-            logger.info(f"   📊 Score conformité : {score}%")
-            logger.info(f"   🎯 Statut validation : {'CONFORME ✅' if status else 'NON CONFORME ❌'}")
+            logger.info(f"    Score conformité : {score}%")
+            logger.info(f"    Statut validation : {'CONFORME ' if status else 'NON CONFORME '}")
 
             # Tables anonymisées
-            logger.info("   🔒 Tables anonymisées :")
+            logger.info("    Tables anonymisées :")
             for table, data in compliance.get('tables_anonymisees', {}).items():
-                conform = '✅' if data.get('conforme', False) else '❌'
+                conform = '' if data.get('conforme', False) else ''
                 logger.info(f"      • {table} : {conform} ({data.get('total_records', 0)} enregistrements)")
 
-        logger.info("\n🔐 MESURES DE SÉCURITÉ :")
+        logger.info("\n MESURES DE SÉCURITÉ :")
         security = rapport['security_measures']
         logger.info(f"   • Niveau anonymisation : {security.get('anonymization_level')}")
         logger.info(f"   • Population minimale ville : {security.get('cities_min_population')} habitants")
@@ -429,23 +429,23 @@ class RgpdImplementation:
         logger.info(f"   • Chiffrement actif : {'Oui' if security.get('encryption_enabled') else 'Non'}")
         logger.info(f"   • Piste d'audit : {'Oui' if security.get('audit_trail_enabled') else 'Non'}")
 
-        logger.info("\n📋 VALIDATION FINALE :")
+        logger.info("\n VALIDATION FINALE :")
         validation_status = rapport['validation_status']
-        logger.info(f"   🎯 Statut global : {validation_status}")
-        logger.info(f"   📈 Score conformité : {rapport['compliance_score']}%")
+        logger.info(f"    Statut global : {validation_status}")
+        logger.info(f"    Score conformité : {rapport['compliance_score']}%")
 
         if rapport['recommendations']:
             logger.info("\n💡 RECOMMANDATIONS :")
             for rec in rapport['recommendations']:
                 logger.info(f"   • {rec}")
         else:
-            logger.info("\n✅ AUCUNE RECOMMANDATION - CONFORMITÉ PARFAITE")
+            logger.info("\n AUCUNE RECOMMANDATION - CONFORMITÉ PARFAITE")
 
-        logger.info("\n📅 PROCHAINES ÉTAPES :")
-        logger.info("   🚀 Phase 5 - C5 : API REST Sécurisée")
-        logger.info("   🌐 Endpoints CRUD avec validation Pydantic")
-        logger.info("   🔐 Authentification JWT et autorisation")
-        logger.info("   📊 Monitoring et logs OWASP")
+        logger.info("\n PROCHAINES ÉTAPES :")
+        logger.info("    Phase 5 - C5 : API REST Sécurisée")
+        logger.info("    Endpoints CRUD avec validation Pydantic")
+        logger.info("    Authentification JWT et autorisation")
+        logger.info("    Monitoring et logs OWASP")
 
     def _save_compliance_report(self, rapport: Dict[str, Any]):
         """Sauvegarde le rapport de conformité RGPD"""
@@ -454,7 +454,7 @@ class RgpdImplementation:
             with open(rapport_file, 'w', encoding='utf-8') as f:
                 json.dump(rapport, f, ensure_ascii=False, indent=2)
 
-            logger.info(f"✅ Rapport sauvegardé : {rapport_file}")
+            logger.info(f" Rapport sauvegardé : {rapport_file}")
 
             # Création aussi en CSV pour lecture facile
             summary_data = {
@@ -481,22 +481,22 @@ class RgpdImplementation:
             df = pd.DataFrame(summary_data)
             csv_file = self.data_dir / "resume_conformite_rgpd.csv"
             df.to_csv(csv_file, index=False, encoding='utf-8')
-            logger.info(f"✅ Résumé CSV sauvegardé : {csv_file}")
+            logger.info(f" Résumé CSV sauvegardé : {csv_file}")
 
         except Exception as e:
-            logger.error(f"❌ Erreur sauvegarde rapport : {e}")
+            logger.error(f" Erreur sauvegarde rapport : {e}")
 
     def close(self):
         """Ferme les connexions à la base de données"""
         try:
             self.engine.dispose()
-            logger.info("✅ Connexions base de données fermées")
+            logger.info(" Connexions base de données fermées")
         except:
             pass
 
 def main():
     """Fonction principale d'implémentation RGPD"""
-    logger.info("🚀 DÉMARRAGE PHASE 4 - C4 : BASE DE DONNÉES RGPD")
+    logger.info(" DÉMARRAGE PHASE 4 - C4 : BASE DE DONNÉES RGPD")
     logger.info("=" * 80)
 
     try:
@@ -504,18 +504,18 @@ def main():
         phase_4_results = rgpd_impl.run_phase_4_c4()
 
         if phase_4_results['success']:
-            logger.info("✅ PHASE 4 - C4 : BASE DE DONNÉES RGPD TERMINÉE AVEC SUCCÈS")
-            logger.info(f"📊 Score conformité RGPD : {phase_4_results.get('validation_results', {}).get('compliance_score', 0)}%")
-            logger.info(f"🎯 Statut validation : {phase_4_results.get('validation_results', {}).get('validation_status', 'UNKNOWN')}")
+            logger.info(" PHASE 4 - C4 : BASE DE DONNÉES RGPD TERMINÉE AVEC SUCCÈS")
+            logger.info(f" Score conformité RGPD : {phase_4_results.get('validation_results', {}).get('compliance_score', 0)}%")
+            logger.info(f" Statut validation : {phase_4_results.get('validation_results', {}).get('validation_status', 'UNKNOWN')}")
         else:
-            logger.error("❌ ÉCHEC PHASE 4 - C4")
+            logger.error(" ÉCHEC PHASE 4 - C4")
             if 'error' in phase_4_results:
                 logger.error(f"Erreur : {phase_4_results['error']}")
 
         return phase_4_results
 
     except Exception as e:
-        logger.error(f"❌ Erreur critique Phase 4 : {e}")
+        logger.error(f" Erreur critique Phase 4 : {e}")
         return {'success': False, 'error': str(e)}
 
     finally:

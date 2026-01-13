@@ -1,7 +1,7 @@
 # MLD - Modèle Logique des Données (RGPD)
 # Observatoire Immobilier Public - Conformité RGPD
 
-## 🏗️ Relations Entités-Associations
+##  Relations Entités-Associations
 
 ### 1. Tables Principales (Données Anonymisées)
 
@@ -245,35 +245,35 @@ SELECT
 FROM donnees_demographiques;
 ```
 
-## 🔐 Contraintes RGPD Implémentées
+##  Contraintes RGPD Implémentées
 
 ### 1. Anonymisation (Minimum de données)
-- ✅ **Villes uniquement >10000 habitants** (pas de petites villes)
-- ✅ **Code postal au niveau quartier** (5 chiffres, pas d'adresses)
-- ✅ **Quartiers génériques** (pas de noms de rue précis)
-- ✅ **Pas de données personnelles** (noms, emails, téléphones)
+-  **Villes uniquement >10000 habitants** (pas de petites villes)
+-  **Code postal au niveau quartier** (5 chiffres, pas d'adresses)
+-  **Quartiers génériques** (pas de noms de rue précis)
+-  **Pas de données personnelles** (noms, emails, téléphones)
 
 ### 2. Traçabilité complète (Art. 5(2) RGPD)
-- ✅ **Logs de tous les accès** (lecture, écriture, suppression)
-- ✅ **IPs partiellement masquées** (4 premiers octets seulement)
-- ✅ **Sessions pseudonymisées** (pas d'identifiants uniques)
-- ✅ **Durées de requêtes** (performance et audit)
+-  **Logs de tous les accès** (lecture, écriture, suppression)
+-  **IPs partiellement masquées** (4 premiers octets seulement)
+-  **Sessions pseudonymisées** (pas d'identifiants uniques)
+-  **Durées de requêtes** (performance et audit)
 
 ### 3. Durée de conservation (Art. 5(1)(e) RGPD)
-- ✅ **5 ans maximum** pour les données immobilières
-- ✅ **12 mois maximum** pour les logs d'accès
-- ✅ **Politique de rétention** configurable par table
-- ✅ **Alertes avant suppression** automatique
+-  **5 ans maximum** pour les données immobilières
+-  **12 mois maximum** pour les logs d'accès
+-  **Politique de rétention** configurable par table
+-  **Alertes avant suppression** automatique
 
 ### 4. Registre des traitements (Art. 30 RGPD)
-- ✅ **Finalités claires** pour chaque traitement
-- ✅ **Bases juridiques** explicitées
-- ✅ **Destinataires** identifiés
-- ✅ **Mesures de sécurité** documentées
+-  **Finalités claires** pour chaque traitement
+-  **Bases juridiques** explicitées
+-  **Destinataires** identifiés
+-  **Mesures de sécurité** documentées
 
-## 📊 Types de Données Autorisées
+##  Types de Données Autorisées
 
-### ✅ Données Non-Personnelles (Autorisées)
+###  Données Non-Personnelles (Autorisées)
 ```sql
 -- Immobilier
 prix_euros, surface_m2, prix_m2_euros, type_bien
@@ -288,7 +288,7 @@ date_collecte, mois_annee, created_at
 population_quartier, revenu_moyen_annuel, densite_habitat, age_moyen_habitants
 ```
 
-### ❌ Données Personnelles (Interdites)
+###  Données Personnelles (Interdites)
 ```sql
 -- Identité
 nom, prenom, nom_jeune_fille, date_naissance, numero_secu
@@ -303,7 +303,7 @@ adresse_complete, numero_rue, complement_adresse, gps_lat, gps_long
 numero_piece_identite, numero_permis_conduire, iban
 ```
 
-## 🚀 Optimisations et Index
+##  Optimisations et Index
 
 ### 1. Index stratégiques (Performance RGPD)
 ```sql

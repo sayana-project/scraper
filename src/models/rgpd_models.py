@@ -341,10 +341,10 @@ def create_rgpd_triggers(engine: Engine):
         engine.execute(trigger_calcul_prix_m2_insert)
         engine.execute(trigger_calcul_prix_m2_update)
 
-        logger.info("✅ Triggers RGPD créés avec succès")
+        logger.info(" Triggers RGPD créés avec succès")
 
     except Exception as e:
-        logger.error(f"❌ Erreur création triggers RGPD: {e}")
+        logger.error(f" Erreur création triggers RGPD: {e}")
 
 def initialize_registre_traitements(session: Session):
     """Initialise le registre des traitements RGPD avec les traitements par défaut"""
@@ -394,11 +394,11 @@ def initialize_registre_traitements(session: Session):
                 session.add(traitement)
 
         session.commit()
-        logger.info("✅ Registre des traitements RGPD initialisé")
+        logger.info(" Registre des traitements RGPD initialisé")
 
     except Exception as e:
         session.rollback()
-        logger.error(f"❌ Erreur initialisation registre RGPD: {e}")
+        logger.error(f" Erreur initialisation registre RGPD: {e}")
 
 def initialize_politiques_retention(session: Session):
     """Initialise les politiques de rétention RGPD"""
@@ -442,11 +442,11 @@ def initialize_politiques_retention(session: Session):
                 session.add(politique)
 
         session.commit()
-        logger.info("✅ Politiques de rétention RGPD initialisées")
+        logger.info(" Politiques de rétention RGPD initialisées")
 
     except Exception as e:
         session.rollback()
-        logger.error(f"❌ Erreur initialisation politiques RGPD: {e}")
+        logger.error(f" Erreur initialisation politiques RGPD: {e}")
 
 def log_access(session: Session, table_name: str, access_type: str,
                reason: str = None, session_id: str = None,
@@ -479,7 +479,7 @@ def log_access(session: Session, table_name: str, access_type: str,
 
     except Exception as e:
         session.rollback()
-        logger.error(f"❌ Erreur logging accès RGPD: {e}")
+        logger.error(f" Erreur logging accès RGPD: {e}")
 
 # Validation RGPD
 def validate_rgpd_compliance(session: Session) -> dict:
@@ -554,7 +554,7 @@ def validate_rgpd_compliance(session: Session) -> dict:
             compliance_report['recommandations'].append("Corriger les non-conformités identifiées")
 
     except Exception as e:
-        logger.error(f"❌ Erreur validation RGPD: {e}")
+        logger.error(f" Erreur validation RGPD: {e}")
         compliance_report['conformite_globale'] = False
         compliance_report['alertes'].append(f"Erreur validation: {str(e)}")
 
@@ -668,7 +668,7 @@ def migrate_to_rgpd_compliance(session: Session, source_data: dict) -> dict:
                     session.add(stat)
 
                 session.commit()
-                logger.info("✅ Statistiques agrégées calculées")
+                logger.info(" Statistiques agrégées calculées")
 
             except Exception as e:
                 session.rollback()
@@ -677,7 +677,7 @@ def migrate_to_rgpd_compliance(session: Session, source_data: dict) -> dict:
         migration_report['fin_migration'] = datetime.utcnow().isoformat()
         migration_report['succes'] = len(migration_report['erreurs']) == 0
 
-        logger.info(f"✅ Migration RGPD terminée: {migration_report['proprietes_migrees']} propriétés, {migration_report['demographie_migree']} démographie")
+        logger.info(f" Migration RGPD terminée: {migration_report['proprietes_migrees']} propriétés, {migration_report['demographie_migree']} démographie")
 
     except Exception as e:
         session.rollback()

@@ -157,14 +157,14 @@ class INSEImporter:
             response = self.session.get(test_url, timeout=5)
 
             if response.status_code == 200:
-                logger.info("✅ Connexion API INSEE réussie")
+                logger.info(" Connexion API INSEE réussie")
                 return True
             else:
-                logger.error(f"❌ Erreur API INSEE: {response.status_code}")
+                logger.error(f" Erreur API INSEE: {response.status_code}")
                 return False
 
         except Exception as e:
-            logger.error(f"❌ Erreur connexion API INSEE: {e}")
+            logger.error(f" Erreur connexion API INSEE: {e}")
             return False
 
     def run_api_importer(self, postal_codes: List[str] = None) -> List[Dict]:
@@ -185,9 +185,9 @@ class INSEImporter:
 if __name__ == "__main__":
     importer = INSEImporter()
 
-    print("📊 Test API INSEE")
+    print(" Test API INSEE")
     connection_ok = importer.test_api_connection()
-    print(f"Connexion API: {'✅ OK' if connection_ok else '❌ Échec'}")
+    print(f"Connexion API: {' OK' if connection_ok else ' Échec'}")
 
     print(f"\n📥 Import INSEE")
     if connection_ok:
@@ -198,6 +198,6 @@ if __name__ == "__main__":
         # Données de test
         data = importer.get_test_data()
 
-    print(f"📈 {len(data)} enregistrements INSEE importés")
+    print(f" {len(data)} enregistrements INSEE importés")
     for item in data[:3]:  # Limiter l'affichage
         print(f"- {item['title']}: {item['population']} habitants ({item['city']})")

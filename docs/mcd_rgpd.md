@@ -1,7 +1,7 @@
 # MCD - Modèle Conceptuel des Données (RGPD)
 # Observatoire Immobilier Public - Conformité RGPD
 
-## 🎯 Objectifs RGPD
+##  Objectifs RGPD
 
 ### 1. Minimisation des données
 - Collecter uniquement les données nécessaires
@@ -18,7 +18,7 @@
 - Logs d'accès : 12 mois
 - Registre des traitements : permanent
 
-## 📊 Entités Principales
+##  Entités Principales
 
 ### 1. PROPRIETE (Immobilier Anonymisé)
 ```
@@ -118,35 +118,35 @@ LOGS_ACCESS_RGPD (N,N) ---< table_concernee >--- (1,N) [PROPRIETE, DONNEES_DEMOG
 - Tous les accès aux données sont tracés
 - Chaque table peut faire l'objet de logs
 
-## 🛡️ Contraintes RGPD
+##  Contraintes RGPD
 
 ### 1. Données personnelles interdites
 ```
-❌ NOMS, PRÉNOMS, ADRESSES PRÉCISES
-❌ TÉLÉPHONES, EMAILS, NUMÉROS SÉCURITÉ SOCIALE
-❌ COORDONNÉS GPS PRÉCISES
-❌ IDENTIFIANTS UNIQUES PERSONNELS
+ NOMS, PRÉNOMS, ADRESSES PRÉCISES
+ TÉLÉPHONES, EMAILS, NUMÉROS SÉCURITÉ SOCIALE
+ COORDONNÉS GPS PRÉCISES
+ IDENTIFIANTS UNIQUES PERSONNELS
 ```
 
 ### 2. Données autorisées (anonymisées)
 ```
-✅ CODE POSTAL (niveau quartier)
-✅ VILLE (>10000 habitants obligatoire)
-✅ QUARTIER (nom générique, pas de nom de rue)
-✅ DONNÉES IMMOBILIÈRES (prix, surface)
-✅ DONNÉES DÉMOGRAPHIQUES PUBLIQUES (INSEE)
-✅ STATISTIQUES AGRÉGÉES
+ CODE POSTAL (niveau quartier)
+ VILLE (>10000 habitants obligatoire)
+ QUARTIER (nom générique, pas de nom de rue)
+ DONNÉES IMMOBILIÈRES (prix, surface)
+ DONNÉES DÉMOGRAPHIQUES PUBLIQUES (INSEE)
+ STATISTIQUES AGRÉGÉES
 ```
 
 ### 3. Contraintes temporelles
 ```
-⏰ ANONYMISATION : Immédiate à l'import
-⏰ CONSERVATION : 5 ans maximum
-⏰ LOGS ACCESS : 12 mois maximum
-⏰ ARCHIVAGE : Export vers format pérenne avant suppression
+ ANONYMISATION : Immédiate à l'import
+ CONSERVATION : 5 ans maximum
+ LOGS ACCESS : 12 mois maximum
+ ARCHIVAGE : Export vers format pérenne avant suppression
 ```
 
-## 📋 Traitements RGPD Déclarés
+##  Traitements RGPD Déclarés
 
 ### 1. Traitement 1: Collecte données immobilières publiques
 - **Finalité**: Analyse tendances marché immobilier
@@ -166,7 +166,7 @@ LOGS_ACCESS_RGPD (N,N) ---< table_concernee >--- (1,N) [PROPRIETE, DONNEES_DEMOG
 - **Durée**: 12 mois
 - **Mesures**: Pseudonymisation, chiffrement logs
 
-## 📊 Diagramme MCD (Mermaid)
+##  Diagramme MCD (Mermaid)
 
 ```mermaid
 erDiagram
@@ -243,9 +243,9 @@ erDiagram
     REGISTRE_TRAITEMENTS_RGPD ||--o{ LOGS_ACCESS_RGPD : "gère"
 ```
 
-## ✅ Validation RGPD MCD
+##  Validation RGPD MCD
 
-### ✅ Principes RGPD respectés:
+###  Principes RGPD respectés:
 1. **Légalité**: Finalités claires et bases juridiques définies
 2. **Loyauté**: Transparence sur les traitements
 3. **Limitation**: Collecte minimale et anonymisation
@@ -254,7 +254,7 @@ erDiagram
 6. **Intégrité**: Mesures de sécurité techniques
 7. **Responsabilité**: Registre complet et logs d'accès
 
-### ✅ Droits des personnes:
+###  Droits des personnes:
 - **Droit d'information**: Registre accessible
 - **Droit d'accès**: Via interface publique
 - **Droit de rectification**: Non applicable (données anonymisées)

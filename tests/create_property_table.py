@@ -1,7 +1,7 @@
-# Initialiser la base de données pour l'API
+# Créer la table proprietes_anonymisees
 import sqlite3
 
-def init_database():
+def create_property_table():
     """Créer la table proprietes_anonymisees si elle n'existe pas"""
 
     conn = sqlite3.connect('data/immobilier_rgpd.db')
@@ -26,10 +26,15 @@ def init_database():
     )
     ''')
 
+    # Créer les index
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_location ON proprietes_anonymisees (code_postal, ville)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_price_surface ON proprietes_anonymisees (prix_euros, surface_m2)')
+    cursor.execute('CREATE INDEX IF NOT EXISTS idx_source_session ON proprietes_anonymisees (source_collecte, date_collecte)')
+
     conn.commit()
     conn.close()
 
-    print(" Table 'proprietes_anonymisees' créée dans data/immobilier_rgpd.db!")
+    print(" Table 'proprietes_anonymisees' créée avec succès!")
 
 if __name__ == "__main__":
-    init_database()
+    create_property_table()
