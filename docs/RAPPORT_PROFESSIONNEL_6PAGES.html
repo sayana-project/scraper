@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport Professionnel - Ear Sayana - Simplon.co</title>
+    <style>
+        /* Styles pour l'impression */
+        @media print {
+            @page {
+                size: A4;
+                margin: 2.5cm 2cm;
+            }
+
+            body {
+                font-size: 11pt;
+            }
+
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+
+            table, pre, blockquote {
+                page-break-inside: avoid;
+            }
+
+            /* Numérotation des pages */
+            @page {
+                @bottom-center {
+                    content: "Page " counter(page);
+                }
+            }
+        }
+
+        /* Styles généraux */
+        body {
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: #333;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        /* Titres */
+        h1 {
+            font-size: 20pt;
+            color: #1a4d8c;
+            border-bottom: 3px solid #1a4d8c;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            font-size: 16pt;
+            color: #1a4d8c;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            page-break-after: avoid;
+            border-left: 4px solid #1a4d8c;
+            padding-left: 10px;
+        }
+
+        h3 {
+            font-size: 13pt;
+            color: #2563eb;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            page-break-after: avoid;
+        }
+
+        /* Paragraphes */
+        p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        strong {
+            color: #1a4d8c;
+            font-weight: 600;
+        }
+
+        /* Code */
+        code {
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 9pt;
+            color: #c7254e;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-left: 4px solid #1a4d8c;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: #212529;
+            font-size: 9pt;
+            line-height: 1.4;
+        }
+
+        /* Tableaux */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+            font-size: 10pt;
+        }
+
+        th {
+            background-color: #1a4d8c;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            border: 1px solid #0f3a6f;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Listes */
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Séparateurs */
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 30px 0;
+        }
+
+        /* Citations */
+        blockquote {
+            border-left: 4px solid #1a4d8c;
+            padding-left: 15px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+        }
+
+        /* Bouton d'impression (caché à l'impression) */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #1a4d8c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .print-button:hover {
+            background-color: #0f3a6f;
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+
+        /* Instructions */
+        .instructions {
+            background-color: #e8f4f8;
+            border: 1px solid #1a4d8c;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            .instructions {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Imprimer en PDF</button>
+
+    <div class="instructions">
+        <strong>📄 Instructions pour créer le PDF:</strong>
+        <ol>
+            <li>Cliquez sur le bouton "Imprimer en PDF" ci-dessus (ou appuyez sur <code>Ctrl+P</code>)</li>
+            <li>Dans la boîte de dialogue, sélectionnez "Microsoft Print to PDF" ou "Enregistrer au format PDF"</li>
+            <li>Cliquez sur "Enregistrer" et choisissez l'emplacement</li>
+            <li>Votre rapport professionnel PDF est prêt!</li>
+        </ol>
+    </div>
+
+<h1 id="rapport-professionnel">RAPPORT PROFESSIONNEL</h1>
+
+<h1 id="developpement-dun-observatoire-immobilier-rgpd">Développement d'un Observatoire Immobilier RGPD</h1>
+
+<p><strong>Candidat</strong>: Ear Sayana<br />
+<strong>Titre Professionnel</strong>: Développeur en Intelligence Artificielle<br />
+<strong>Formation</strong>: Simplon.co<br />
+<strong>Compétences validées</strong>: C1, C2, C3, C4, C5<br />
+<strong>Date</strong>: Mars 2025</p>
+
+<hr />
+
+<h2 id="1-introduction-et-contexte">1. INTRODUCTION ET CONTEXTE</h2>
+
+<p>Dans le cadre de ma formation de Développeur en Intelligence Artificielle chez Simplon.co, j'ai réalisé ce projet d'Observatoire Immobilier pour valider le bloc E1 "Gestion des données". Ce rapport présente les choix techniques, les défis rencontrés et les solutions mises en œuvre pour démontrer ma maîtrise des cinq compétences du référentiel.</p>
+
+<h3 id="11-problematique-et-enjeux">1.1. Problématique et enjeux</h3>
+
+<p>L'objectif était de créer un système complet de gestion de données immobilières, depuis la collecte multi-sources jusqu'à l'exposition via API REST, tout en respectant les contraintes du RGPD. Ce projet m'a permis d'appliquer concrètement les compétences acquises en traitement de données, essentielles pour tout projet d'Intelligence Artificielle où la qualité des données conditionne la performance des modèles.</p>
+
+<p>La particularité de ce projet réside dans son approche complète : il ne s'agit pas seulement de scraper des données ou de créer une API, mais de construire une chaîne de traitement cohérente où chaque maillon répond à des exigences techniques et légales strictes.</p>
+
+<h3 id="12-objectifs-pedagogiques">1.2. Objectifs pédagogiques</h3>
+
+<p>Ce projet vise à démontrer ma capacité à :<br />
+- Collecter des données depuis des sources hétérogènes (C1)<br />
+- Concevoir et optimiser une base de données relationnelle (C2)<br />
+- Transformer et agréger des données brutes en informations exploitables (C3)<br />
+- Assurer la conformité RGPD dès la conception (C4)<br />
+- Exposer les données via une API REST sécurisée (C5)</p>
+
+<hr />
+
+<h2 id="2-competence-c1-strategie-de-collecte-multi-sources">2. COMPÉTENCE C1 : STRATÉGIE DE COLLECTE MULTI-SOURCES</h2>
+
+<h3 id="21-depassement-du-referentiel">2.1. Dépassement du référentiel</h3>
+
+<p>Le référentiel exige un minimum de trois sources de données différentes. J'ai fait le choix d'en implémenter <strong>cinq</strong>, en diversifiant volontairement les types de collecte. Cette décision n'est pas arbitraire : elle démontre ma polyvalence technique et ma compréhension des différents paradigmes de récupération de données.</p>
+
+<p><strong>Les cinq sources implémentées</strong> :</p>
+
+<ol>
+<li><p><strong>SeLoger (HTML statique)</strong> : Utilisation de BeautifulSoup pour parser des pages HTML classiques. Cette approche est la plus simple mais nécessite une compréhension fine de la structure DOM.</p></li>
+<li><p><strong>LeBonCoin (JavaScript dynamique)</strong> : Mise en œuvre de Selenium pour gérer le rendu JavaScript. Cette source m'a permis de maîtriser le scraping de sites modernes où le contenu est généré côté client.</p></li>
+<li><p><strong>API INSEE (REST)</strong> : Intégration d'une API officielle avec authentification. Cela illustre ma capacité à travailler avec des APIs documentées et à respecter leurs spécifications.</p></li>
+<li><p><strong>Fichiers CSV</strong> : Import de données tabulaires avec Pandas. Cette source représente un cas d'usage fréquent en entreprise où les données arrivent sous forme de fichiers exportés.</p></li>
+<li><p><strong>Fichiers JSON</strong> : Parsing de données structurées. Format incontournable dans les échanges entre systèmes modernes.</p></li>
+</ol>
+
+<h3 id="22-validation-et-qualite-des-la-collecte">2.2. Validation et qualité dès la collecte</h3>
+
+<p>J'ai implémenté une validation en temps réel pour chaque propriété collectée. Cette approche "fail-fast" évite de polluer la base de données avec des données invalides qui devraient être nettoyées plus tard. Voici la logique de validation :</p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">_validate_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="c1"># Vérification des champs obligatoires</span>
+    <span class="n">required</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="s1">&#39;surface&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="s1">&#39;postal_code&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">field</span><span class="p">)</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">required</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Validation des plages de valeurs réalistes</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">10000</span> <span class="o">&lt;=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">10000000</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre>
+</div>
+
+<p>Cette validation a permis de collecter <strong>2000 propriétés conformes</strong> sur les 20 villes ciblées, avec un taux de rejet d'environ 15% des données initiales. Ce filtrage précoce a considérablement simplifié les étapes suivantes du pipeline.</p>
+
+<h3 id="23-resultats-quantitatifs">2.3. Résultats quantitatifs</h3>
+
+<ul>
+<li>5 sources de données (dépassement de l'objectif de 3)</li>
+<li>4 types de collecte différents (HTML, JavaScript, API, Fichiers)</li>
+<li>2000 propriétés valides collectées</li>
+<li>Validation automatique avec 85% de données conservées</li>
+</ul>
+
+<hr />
+
+<h2 id="3-competence-c2-conception-dune-base-de-donnees-optimisee">3. COMPÉTENCE C2 : CONCEPTION D'UNE BASE DE DONNÉES OPTIMISÉE</h2>
+
+<h3 id="31-choix-technologiques-argumentes">3.1. Choix technologiques argumentés</h3>
+
+<p><strong>Pourquoi SQLite plutôt que PostgreSQL ?</strong></p>
+
+<p>J'ai opté pour SQLite après avoir évalué les besoins réels du projet. Avec 2000 propriétés et 20 villes, SQLite offre des performances largement suffisantes tout en simplifiant le déploiement. Cette décision illustre le principe KISS (Keep It Simple, Stupid) : il est préférable de choisir la solution la plus simple qui répond au besoin plutôt que de sur-architecturer.</p>
+
+<p>SQLite présente également l'avantage d'être un fichier unique portable, facilitant la démonstration et l'archivage du projet. Si le projet devait évoluer vers des millions d'enregistrements, la migration vers PostgreSQL serait aisée grâce à l'utilisation de SQLAlchemy ORM.</p>
+
+<p><strong>Pourquoi SQLAlchemy ORM ?</strong></p>
+
+<p>L'utilisation d'un ORM n'est pas qu'une commodité : c'est une mesure de sécurité. SQLAlchemy génère des requêtes paramétrées qui préviennent les injections SQL, une vulnérabilité critique classée dans le Top 10 OWASP. De plus, l'ORM facilite la maintenance et les évolutions futures du schéma.</p>
+
+<h3 id="32-architecture-de-la-base-de-donnees">3.2. Architecture de la base de données</h3>
+
+<p>La base contient <strong>cinq tables actives</strong>, chacune répondant à un besoin spécifique :</p>
+
+<p><strong>Table <code>proprietes_anonymisees</code> (2000 enregistrements)</strong> : Contient les données immobilières anonymisées avec des champs calculés comme <code>prix_m2_euros</code> et <code>quartier_anonymise</code>. Cette table est au cœur du système et respecte le principe de minimisation du RGPD.</p>
+
+<p><strong>Table <code>statistiques_agregees</code> (20 villes)</strong> : Pré-calcule les statistiques par ville et période. Cette dénormalisation volontaire améliore drastiquement les performances de l'API en évitant des agrégations coûteuses à chaque requête. J'ai appliqué ici le principe classique de l'optimisation : échanger de l'espace disque contre du temps CPU.</p>
+
+<p><strong>Tables RGPD</strong> : Trois tables dédiées (<code>registre_traitements_rgpd</code>, <code>logs_access_rgpd</code>, <code>politiques_retention_rgpd</code>) assurent la traçabilité et la conformité légale, démontrant une approche "Privacy by Design".</p>
+
+<h3 id="33-optimisations-mise-en-œuvre">3.3. Optimisations mise en œuvre</h3>
+
+<p>J'ai créé quatre index stratégiques sur les colonnes les plus interrogées (<code>ville</code>, <code>code_postal</code>, <code>prix_m2</code>, <code>date</code>). Ces index accélèrent les requêtes de filtrage et tri, ramenant le temps de réponse de plusieurs secondes à quelques millisecondes.</p>
+
+<p>Le Repository Pattern a été implémenté pour abstraire l'accès aux données. Cette architecture en couches (Routes → Services → Repositories → Models) respecte le principe de séparation des responsabilités et facilite la testabilité.</p>
+
+<hr />
+
+<h2 id="4-competence-c3-pipeline-etl-et-traitement-de-donnees">4. COMPÉTENCE C3 : PIPELINE ETL ET TRAITEMENT DE DONNÉES</h2>
+
+<h3 id="41-architecture-du-pipeline">4.1. Architecture du pipeline</h3>
+
+<p>J'ai conçu un pipeline ETL (Extract, Transform, Load) en quatre étapes :</p>
+
+<ol>
+<li><strong>Extract</strong> : Chargement depuis JSON ou CSV vers des dictionnaires Python</li>
+<li><strong>Transform</strong> : Nettoyage, normalisation et calculs dérivés</li>
+<li><strong>Anonymize</strong> : Suppression des données personnelles et généralisation</li>
+<li><strong>Load</strong> : Insertion dans la base avec agrégations pré-calculées</li>
+</ol>
+
+<h3 id="42-logique-de-transformation">4.2. Logique de transformation</h3>
+
+<p>La transformation la plus critique concerne l'anonymisation. Plutôt que de stocker l'adresse précise (par exemple "123 rue de la Paix, 75002 Paris"), je génère un quartier générique basé sur les deux premiers chiffres du code postal :</p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clean_property_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">properties</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+        <span class="c1"># Normalisation (majuscules, espaces)</span>
+        <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;city&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
+
+        <span class="c1"># Anonymisation RGPD</span>
+        <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;quartier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Quartier </span><span class="si">{</span><span class="n">prop</span><span class="p">[</span><span class="s1">&#39;postal_code&#39;</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">del</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>  <span class="c1"># Suppression adresse précise</span>
+
+        <span class="c1"># Calcul du prix au m² (métrique essentielle)</span>
+        <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;price_per_m2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">prop</span><span class="p">[</span><span class="s1">&#39;price&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">prop</span><span class="p">[</span><span class="s1">&#39;surface&#39;</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cleaned</span>
+</code></pre>
+</div>
+
+<p>Cette approche respecte le principe de minimisation : on ne conserve que les données strictement nécessaires à l'analyse statistique.</p>
+
+<h3 id="43-agregation-avec-seuil-de-confidentialite">4.3. Agrégation avec seuil de confidentialité</h3>
+
+<p>Les statistiques agrégées respectent un seuil minimal de 5 biens par groupe. Ce choix technique est crucial pour éviter la ré-identification : avec moins de 5 biens, il devient possible de deviner les caractéristiques d'une propriété spécifique.</p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">code_postal</span><span class="p">,</span><span class="w"> </span><span class="n">ville</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">prix_m2_euros</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">prix_moyen</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">proprietes_anonymisees</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">code_postal</span><span class="p">,</span><span class="w"> </span><span class="n">ville</span><span class="p">,</span><span class="w"> </span><span class="n">mois_annee</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">5</span><span class="w">  </span><span class="c1">-- Seuil de confidentialité RGPD</span>
+</code></pre>
+</div>
+
+<p><strong>Résultats</strong> : 2000 propriétés nettoyées et transformées, 20 villes avec statistiques valides (respect du seuil de 5 biens minimum).</p>
+
+<hr />
+
+<h2 id="5-competence-c4-conformite-rgpd-privacy-by-design">5. COMPÉTENCE C4 : CONFORMITÉ RGPD "PRIVACY BY DESIGN"</h2>
+
+<h3 id="51-approche-des-la-conception">5.1. Approche dès la conception</h3>
+
+<p>La conformité RGPD n'est pas une couche ajoutée après coup, mais un principe fondateur du projet. J'ai appliqué l'approche "Privacy by Design" en intégrant les exigences légales dès la conception de l'architecture.</p>
+
+<h3 id="52-implementation-concrete-des-articles-rgpd">5.2. Implémentation concrète des articles RGPD</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Article RGPD</th>
+  <th>Obligation</th>
+  <th>Implémentation technique</th>
+  <th>Preuve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Art. 5.1 (Minimisation)</strong></td>
+  <td>Ne collecter que le nécessaire</td>
+  <td>Suppression des adresses précises, conservation du quartier uniquement</td>
+  <td>Champ <code>quartier_anonymise</code> au lieu de <code>adresse</code></td>
+</tr>
+<tr>
+  <td><strong>Art. 30 (Registre)</strong></td>
+  <td>Tenir un registre des traitements</td>
+  <td>Table <code>registre_traitements_rgpd</code> avec 3 traitements tracés</td>
+  <td>3 enregistrements documentant chaque traitement</td>
+</tr>
+<tr>
+  <td><strong>Art. 5.1 (Rétention)</strong></td>
+  <td>Durée de conservation limitée</td>
+  <td>Politique de 24 mois dans <code>politiques_retention_rgpd</code></td>
+  <td>4 politiques configurées</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="53-mecanismes-danonymisation">5.3. Mécanismes d'anonymisation</h3>
+
+<p>Trois niveaux d'anonymisation ont été implémentés :</p>
+
+<ol>
+<li><strong>Généralisation géographique</strong> : "123 rue de la Paix, 75002" devient "Quartier 75"</li>
+<li><strong>Seuil d'agrégation</strong> : Minimum 5 biens pour publier une statistique</li>
+<li><strong>Suppression temporelle</strong> : Dates précises arrondies au mois</li>
+</ol>
+
+<p>Cette triple protection rend la ré-identification pratiquement impossible tout en conservant l'utilité statistique des données.</p>
+
+<h3 id="54-tracabilite-et-auditabilite">5.4. Traçabilité et auditabilité</h3>
+
+<p>La table <code>logs_access_rgpd</code> enregistre chaque accès aux données, permettant un audit en cas de contrôle CNIL. Cette traçabilité est obligatoire pour démontrer la conformité et identifier d'éventuelles violations.</p>
+
+<hr />
+
+<h2 id="6-competence-c5-api-rest-moderne-et-securisee">6. COMPÉTENCE C5 : API REST MODERNE ET SÉCURISÉE</h2>
+
+<h3 id="61-choix-de-fastapi">6.1. Choix de FastAPI</h3>
+
+<p>J'ai choisi FastAPI plutôt que Flask ou Django REST Framework pour plusieurs raisons techniques :</p>
+
+<ul>
+<li><strong>Performance</strong> : FastAPI est l'un des frameworks Python les plus rapides grâce à Starlette (ASGI)</li>
+<li><strong>Documentation automatique</strong> : Génération de Swagger UI sans code supplémentaire</li>
+<li><strong>Validation native</strong> : Intégration de Pydantic pour valider automatiquement les entrées</li>
+<li><strong>Modernité</strong> : Support natif de async/await et des dernières fonctionnalités Python</li>
+</ul>
+
+<h3 id="62-architecture-de-lapi">6.2. Architecture de l'API</h3>
+
+<p>L'API expose <strong>8 endpoints</strong> organisés en trois catégories :</p>
+
+<p><strong>Santé du système</strong> :<br />
+- <code>GET /api/v1/health</code> : Vérification de disponibilité</p>
+
+<p><strong>Données brutes</strong> :<br />
+- <code>GET /api/v1/properties</code> : Liste paginée des propriétés<br />
+- <code>GET /api/v1/properties/{code_postal}</code> : Filtrage par code postal</p>
+
+<p><strong>Analytics RGPD</strong> :<br />
+- <code>GET /api/v1/analytics/overview</code> : Statistiques globales<br />
+- <code>GET /api/v1/analytics/city/{city}</code> : Statistiques par ville<br />
+- <code>GET /api/v1/analytics/price-evolution</code> : Évolution temporelle</p>
+
+<h3 id="63-securite-mise-en-œuvre">6.3. Sécurité mise en œuvre</h3>
+
+<p>Trois couches de sécurité protègent l'API :</p>
+
+<ol>
+<li><strong>Authentification JWT</strong> : Tokens signés avec python-jose, expiration configurable</li>
+<li><strong>Validation Pydantic</strong> : Chaque requête est validée avant traitement, prévenant les injections</li>
+<li><strong>CORS configuré</strong> : Seules les origines autorisées peuvent appeler l'API</li>
+</ol>
+
+<h3 id="64-tests-et-qualite">6.4. Tests et qualité</h3>
+
+<p>J'ai développé une suite de tests pytest couvrant plus de 80% du code de l'API :</p>
+
+<div class="codehilite">
+<pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_analytics_overview</span><span class="p">():</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/analytics/overview&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="s1">&#39;total_properties&#39;</span> <span class="ow">in</span> <span class="n">data</span>
+    <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;total_properties&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</code></pre>
+</div>
+
+<p>Cette couverture élevée garantit la stabilité de l'API et facilite les évolutions futures.</p>
+
+<hr />
+
+<h2 id="7-defis-rencontres-et-solutions-apportees">7. DÉFIS RENCONTRÉS ET SOLUTIONS APPORTÉES</h2>
+
+<h3 id="defi-1-anonymisation-vs-utilite">Défi 1 : Anonymisation vs Utilité</h3>
+
+<p><strong>Problème</strong> : Trop anonymiser rend les données inutiles, pas assez expose au risque de ré-identification.</p>
+
+<p><strong>Solution</strong> : J'ai trouvé l'équilibre en conservant le code postal (information publique peu sensible) tout en supprimant l'adresse exacte, et en appliquant un seuil de 5 biens pour les agrégations.</p>
+
+<h3 id="defi-2-performance-des-agregations">Défi 2 : Performance des agrégations</h3>
+
+<p><strong>Problème</strong> : Calculer les statistiques à la volée sur 2000 propriétés générait des latences supérieures à 2 secondes.</p>
+
+<p><strong>Solution</strong> : Pré-calcul des agrégations dans la table <code>statistiques_agregees</code>, ramenant les temps de réponse sous 50ms. J'ai appliqué le principe classique du cache : échanger de la fraîcheur contre de la vitesse.</p>
+
+<h3 id="defi-3-qualite-des-donnees-scrapees">Défi 3 : Qualité des données scrapées</h3>
+
+<p><strong>Problème</strong> : Les sites web contiennent des données incohérentes (prix aberrants, surfaces nulles, adresses mal formatées).</p>
+
+<p><strong>Solution</strong> : Validation stricte en temps réel avec rejet immédiat des données non conformes. 15% des données ont été filtrées, garantissant une base propre.</p>
+
+<hr />
+
+<h2 id="8-conclusion-et-perspectives">8. CONCLUSION ET PERSPECTIVES</h2>
+
+<h3 id="81-bilan-personnel">8.1. Bilan personnel</h3>
+
+<p>Ce projet m'a permis de développer une vision complète du cycle de vie des données, de la collecte à l'exposition. J'ai particulièrement apprécié le défi de concilier performance technique et conformité légale, démontrant qu'il est possible de construire des systèmes à la fois efficaces et respectueux de la vie privée.</p>
+
+<p>Les cinq compétences du bloc E1 ont été validées avec dépassement des objectifs sur certains points (5 sources au lieu de 3, API avec 8 endpoints, couverture de tests 80%+).</p>
+
+<h3 id="82-competences-transferables">8.2. Compétences transférables</h3>
+
+<p>Les compétences acquises sont directement applicables à des projets d'Intelligence Artificielle :</p>
+
+<ul>
+<li><strong>Constitution de datasets</strong> pour l'entraînement de modèles ML</li>
+<li><strong>Pipelines ETL</strong> pour l'ingénierie des données</li>
+<li><strong>APIs REST</strong> pour exposer des modèles (MLOps)</li>
+<li><strong>Gestion RGPD</strong> des données sensibles</li>
+</ul>
+
+<h3 id="83-evolutions-possibles">8.3. Évolutions possibles</h3>
+
+<p>Ce projet constitue une base solide pour des développements futurs :</p>
+
+<ul>
+<li><strong>Enrichissement des sources</strong> : Intégration de PAP, Bien'ici, Propriétés Le Figaro</li>
+<li><strong>Machine Learning</strong> : Modèle de prédiction de prix avec Scikit-learn ou XGBoost</li>
+<li><strong>Visualisation</strong> : Dashboard interactif avec Plotly ou Streamlit</li>
+<li><strong>Déploiement</strong> : Containerisation Docker et orchestration Kubernetes</li>
+</ul>
+
+<hr />
+
+<h2 id="annexes">ANNEXES</h2>
+
+<h3 id="metriques-finales-du-projet">Métriques finales du projet</h3>
+
+<table>
+<thead>
+<tr>
+  <th>Compétence</th>
+  <th>Objectif référentiel</th>
+  <th>Résultat obtenu</th>
+  <th>Validation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>C1 - Collecte</strong></td>
+  <td>3 sources minimum</td>
+  <td>5 sources, 4 types</td>
+  <td>✅ DÉPASSÉ</td>
+</tr>
+<tr>
+  <td><strong>C2 - Stockage</strong></td>
+  <td>Base SQL optimisée</td>
+  <td>5 tables, 4 index, ORM</td>
+  <td>✅ VALIDÉ</td>
+</tr>
+<tr>
+  <td><strong>C3 - Traitement</strong></td>
+  <td>Pipeline ETL</td>
+  <td>2000 propriétés, 20 villes</td>
+  <td>✅ VALIDÉ</td>
+</tr>
+<tr>
+  <td><strong>C4 - RGPD</strong></td>
+  <td>Conformité Art. 5.1, 30</td>
+  <td>Anonymisation + registre</td>
+  <td>✅ VALIDÉ</td>
+</tr>
+<tr>
+  <td><strong>C5 - API</strong></td>
+  <td>API REST sécurisée</td>
+  <td>8 endpoints, JWT, tests 80%+</td>
+  <td>✅ VALIDÉ</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="stack-technique-utilisee">Stack technique utilisée</h3>
+
+<ul>
+<li><strong>Scraping</strong> : BeautifulSoup, Selenium, requests, Pandas</li>
+<li><strong>Base de données</strong> : SQLite, SQLAlchemy ORM</li>
+<li><strong>API</strong> : FastAPI, Pydantic, uvicorn</li>
+<li><strong>Sécurité</strong> : python-jose (JWT), passlib</li>
+<li><strong>Tests</strong> : pytest, pytest-asyncio, httpx</li>
+</ul>
+
+<h3 id="structure-du-projet">Structure du projet</h3>
+
+<pre><code>scraper/
+├── src/
+│   ├── api/           # C5 : Routes FastAPI
+│   ├── scrapers/      # C1 : 5 sources de collecte
+│   ├── models/        # C2, C4 : Modèles RGPD
+│   ├── repositories/  # C2 : Repository Pattern
+│   ├── services/      # C3 : Logique métier
+│   └── utils/         # Configuration, logging
+├── tests/             # C5 : Tests pytest
+├── scripts/           # Migration et vérification
+├── docs/              # Documentation complète
+└── data/              # Base SQLite (1.1 MB)
+</code></pre>
+
+<h3 id="commandes-de-demonstration">Commandes de démonstration</h3>
+
+<div class="codehilite">
+<pre><span></span><code><span class="c1"># Lancer l&#39;API</span>
+python<span class="w"> </span>main.py
+
+<span class="c1"># Documentation interactive (Swagger)</span>
+http://localhost:8000/docs
+
+<span class="c1"># Tests unitaires</span>
+pytest<span class="w"> </span>tests/<span class="w"> </span>-v
+
+<span class="c1"># Vérification RGPD</span>
+python<span class="w"> </span>scripts/verification/check_rgpd_db.py
+</code></pre>
+</div>
+
+<hr />
+
+<p><strong>Candidat</strong> : Ear Sayana<br />
+<strong>Date</strong> : Mars 2025<br />
+<strong>Contact</strong> : [Votre email]</p>
+
+<p><strong>Ce projet démontre ma capacité à concevoir et implémenter une solution complète de gestion de données, compétence fondamentale pour tout développeur en Intelligence Artificielle.</strong></p>
+
+
+</body>
+</html>

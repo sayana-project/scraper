@@ -1,0 +1,52 @@
+{
+  "model_name": "RandomForest",
+  "model_type": "pipeline",
+  "features": [
+    "surface_m2",
+    "nombre_pieces",
+    "surface_terrain",
+    "surface_par_piece",
+    "terrain_ratio",
+    "ville",
+    "type_bien",
+    "region",
+    "taille_ville"
+  ],
+  "target": "prix_m2",
+  "villes": [
+    "Aix-En-Provence",
+    "Angers",
+    "Bordeaux",
+    "Brest",
+    "Clermont-Ferrand",
+    "Dijon",
+    "Grenoble",
+    "Le Mans",
+    "Lille",
+    "Lyon",
+    "Marseille",
+    "Montpellier",
+    "Nantes",
+    "Nice",
+    "N\u00eemes",
+    "Paris",
+    "Rennes",
+    "Saint-\u00c9tienne",
+    "Strasbourg",
+    "Toulouse"
+  ],
+  "nb_observations": 2000,
+  "performance": {
+    "rmse": 1044.4861949074161,
+    "mae": 731.5309487457207,
+    "r2": 0.7842235292152622
+  },
+  "model_params": {
+    "n_estimators": 200,
+    "max_depth": 20,
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "data_source": "generated_properties.csv",
+  "date_creation": "2025-12-11T11:19:37.922083"
+}

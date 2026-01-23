@@ -128,7 +128,7 @@
 ###  Validation C2-C3 - DÉTAILS
 - [x] **Date validation** : 30 Novembre 2025
 - [x] **Script validation** : `aggregation_simple.py` (orchestration complète)
-- [x] **Fichiers générés** : `data/aggregated_data.json`, `immobilier.db`
+- [x] **Fichiers générés** : `data/aggregated_data.json`, `data/immobilier_rgpd.db`
 - [x] **Logs détaillés** : `aggregation_c2_c3.log`
 - [x] **Architecture** : Repository Pattern (C2) + Service Layer (C3)
 - [x] **Code qualité** : SQLAlchemy + Pandas + Logging + Tests unitaires

@@ -1,0 +1,30 @@
+{
+  "model_name": "RandomForest",
+  "features": [],
+  "target": "prix_m2",
+  "villes": [
+    "Aix-En-Provence",
+    "Angers",
+    "Bordeaux",
+    "Brest",
+    "Clermont-Ferrand",
+    "Dijon",
+    "Grenoble",
+    "Le Mans",
+    "Lille",
+    "Lyon",
+    "Marseille",
+    "Montpellier",
+    "Nantes",
+    "Nice",
+    "N\u00eemes",
+    "Paris",
+    "Rennes",
+    "Saint-\u00c9tienne",
+    "Strasbourg",
+    "Toulouse"
+  ],
+  "nb_observations": 2000,
+  "data_source": "generated_properties.csv",
+  "date_creation": "2025-12-11T11:19:38.342324"
+}

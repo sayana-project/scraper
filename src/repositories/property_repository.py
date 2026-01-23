@@ -11,7 +11,7 @@ from src.models import Property, DemographicData, AggregatedProperty
 logger = logging.getLogger(__name__)
 
 class PropertyRepository:
-    """Repository Pattern pour les requêtes SQL optimisées (C2)"""
+    """Repository Pattern pour les requêtes SQL optimisées """
 
     def __init__(self, database_url: str = "sqlite:///data/immobilier_rgpd.db"):
         self.engine = create_engine(database_url)

@@ -7,7 +7,7 @@ logger = setup_logging()
 
 class Settings(BaseSettings):
     # Database
-    database_url: str = "sqlite:///./observatoire.db"
+    database_url: str = "sqlite:///data/immobilier_rgpd.db"
 
     # API
     api_title: str = "Observatoire Immobilier API"

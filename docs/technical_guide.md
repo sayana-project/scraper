@@ -101,8 +101,7 @@ observatoire-immobilier/
 ├── data/                         # Données applicatives
 │   ├── raw/                      # Données brutes collectées
 │   ├── processed/                # Données nettoyées
-│   ├── immobilier.db            # BDD développement SQLite
-│   └── immobilier_rgpd.db       # BDD production anonymisée
+│   └── immobilier_rgpd.db       # BDD production conforme RGPD (SQLite)
 ├── logs/                        # Logs application
 ├── tests/                       # Tests automatisés
 │   ├── unit/                     # Tests unitaires

@@ -1,0 +1,64 @@
+{
+  "model_file": "price_predictor.pkl",
+  "features_input": [
+    "surface_m2",
+    "nombre_pieces",
+    "surface_terrain",
+    "ville",
+    "type_bien"
+  ],
+  "villes_disponibles": [
+    "Aix-En-Provence",
+    "Angers",
+    "Bordeaux",
+    "Brest",
+    "Clermont-Ferrand",
+    "Dijon",
+    "Grenoble",
+    "Le Mans",
+    "Lille",
+    "Lyon",
+    "Marseille",
+    "Montpellier",
+    "Nantes",
+    "Nice",
+    "N\u00eemes",
+    "Paris",
+    "Rennes",
+    "Saint-\u00c9tienne",
+    "Strasbourg",
+    "Toulouse"
+  ],
+  "types_bien": [
+    "Appartement",
+    "Maison",
+    "Autre"
+  ],
+  "target_prediction": "prix_m2",
+  "regions": [
+    "Provence-Alpes-Cote d'Azur",
+    "Auvergne-Rh\u00f4ne-Alpes",
+    "\u00cele-de-France",
+    "Autre",
+    "Occitanie",
+    "Hauts-de-France",
+    "Pays de la Loire",
+    "Bourgogne-Franche-Comt\u00e9",
+    "Grand Est",
+    "Nouvelle-Aquitaine"
+  ],
+  "features_disponibles": [
+    "ville",
+    "code_postal",
+    "prix_euros",
+    "surface_m2",
+    "type_bien",
+    "prix_m2",
+    "nombre_pieces",
+    "surface_terrain",
+    "region",
+    "taille_ville",
+    "surface_par_piece",
+    "terrain_ratio"
+  ]
+}

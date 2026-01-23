@@ -75,60 +75,31 @@ class ProprieteAnonymisee(Base):
             'created_at': self.created_at.isoformat() if self.created_at else None
         }
 
-class DonneesDemographiques(Base):
-    """
-    Table des données démographiques INSEE (publiques et anonymisées)
-    """
-    __tablename__ = 'donnees_demographiques'
+# CLASSE SUPPRIMEE: DonneesDemographiques (table vide non utilisée)
+# La table 'donnees_demographiques' a été supprimée lors du nettoyage du 2025-01-15
+# Raison: table vide sans utilité pour les compétences C1-C5
+# Conservation possible pour évolution future (intégration données INSEE)
 
-    id_demo = Column(Integer, primary_key=True, autoincrement=True)
-    code_postal = Column(String(5), nullable=False, index=True)
-    ville = Column(String(100), nullable=False, index=True)
-    population_quartier = Column(Integer, nullable=False, index=True)
-    revenu_moyen_annuel = Column(Integer, nullable=False)
-    densite_habitat = Column(Integer, nullable=False)  # hab/km²
-    age_moyen_habitants = Column(DECIMAL(4, 1), nullable=False)
-    nb_familles = Column(Integer, nullable=False)
-    taux_proprietaire = Column(DECIMAL(4, 1), nullable=False)  # %
-    nb_logements = Column(Integer, nullable=False)
-    source_insee = Column(String(20), default='insee')
-    date_collecte_insee = Column(Date, nullable=False)
-    date_anonymisation_demo = Column(DateTime, default=datetime.utcnow)
-
-    # Contraintes RGPD et unicité
-    __table_args__ = (
-        UniqueConstraint('code_postal', 'ville', name='uk_demo_code_postal_ville'),
-        CheckConstraint('population_quartier >= 10000', name='ck_population_minimale'),
-        CheckConstraint('revenu_moyen_annuel > 0', name='ck_revenu_positif'),
-        CheckConstraint('densite_habitat > 0', name='ck_densite_positive'),
-        CheckConstraint('age_moyen_habitants BETWEEN 0 AND 120', name='ck_age_raisonnable'),
-        CheckConstraint('taux_proprietaire BETWEEN 0 AND 100', name='ck_taux_proprietaire'),
-        CheckConstraint('nb_logements > 0', name='ck_nb_logements_positif'),
-        Index('idx_demo_code_postal', 'code_postal'),
-        Index('idx_demo_ville', 'ville'),
-        Index('idx_demo_population', 'population_quartier'),
-        Index('idx_demo_localisation', 'code_postal', 'ville'),
-    )
-
-    def __repr__(self):
-        return f"<DonneesDemographiques(code_postal='{self.code_postal}', ville='{self.ville}', population={self.population_quartier})>"
-
-    def to_dict(self):
-        return {
-            'id_demo': self.id_demo,
-            'code_postal': self.code_postal,
-            'ville': self.ville,
-            'population_quartier': self.population_quartier,
-            'revenu_moyen_annuel': self.revenu_moyen_annuel,
-            'densite_habitat': self.densite_habitat,
-            'age_moyen_habitants': float(self.age_moyen_habitants),
-            'nb_familles': self.nb_familles,
-            'taux_proprietaire': float(self.taux_proprietaire),
-            'nb_logements': self.nb_logements,
-            'source_insee': self.source_insee,
-            'date_collecte_insee': self.date_collecte_insee.isoformat() if self.date_collecte_insee else None,
-            'date_anonymisation_demo': self.date_anonymisation_demo.isoformat() if self.date_anonymisation_demo else None
-        }
+# class DonneesDemographiques(Base):
+#     """
+#     Table des données démographiques INSEE (publiques et anonymisées)
+#     ARCHIVE: Non utilisée dans le projet actuel
+#     """
+#     __tablename__ = 'donnees_demographiques'
+#
+#     id_demo = Column(Integer, primary_key=True, autoincrement=True)
+#     code_postal = Column(String(5), nullable=False, index=True)
+#     ville = Column(String(100), nullable=False, index=True)
+#     population_quartier = Column(Integer, nullable=False, index=True)
+#     revenu_moyen_annuel = Column(Integer, nullable=False)
+#     densite_habitat = Column(Integer, nullable=False)  # hab/km²
+#     age_moyen_habitants = Column(DECIMAL(4, 1), nullable=False)
+#     nb_familles = Column(Integer, nullable=False)
+#     taux_proprietaire = Column(DECIMAL(4, 1), nullable=False)  # %
+#     nb_logements = Column(Integer, nullable=False)
+#     source_insee = Column(String(20), default='insee')
+#     date_collecte_insee = Column(Date, nullable=False)
+#     date_anonymisation_demo = Column(DateTime, default=datetime.utcnow)
 
 class StatistiquesAgregees(Base):
     """
